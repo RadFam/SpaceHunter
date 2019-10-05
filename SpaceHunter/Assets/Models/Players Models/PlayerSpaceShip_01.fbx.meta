@@ -1,0 +1,149 @@
+fileFormatVersion: 2
+guid: bb4618b3dfcc8f04dbc7adc2ec8ac566
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cockpit
+    100002: EngineLeft
+    100004: EngineRight
+    100006: GunLeft
+    100008: GunRight
+    100010: JammerLeft
+    100012: JammerRight
+    100014: NozzleLeft
+    100016: NozzleRight
+    100018: //RootNode
+    100020: SpaceShip2
+    400000: Cockpit
+    400002: EngineLeft
+    400004: EngineRight
+    400006: GunLeft
+    400008: GunRight
+    400010: JammerLeft
+    400012: JammerRight
+    400014: NozzleLeft
+    400016: NozzleRight
+    400018: //RootNode
+    400020: SpaceShip2
+    2100000: Material
+    2100002: No Name
+    2100004: Material.007
+    2100006: Material.005
+    2100008: Material.008
+    2100010: Material.006
+    2100012: Material.002
+    2100014: Material.004
+    2100016: Material.003
+    2100018: Material.001
+    2300000: Cockpit
+    2300002: EngineLeft
+    2300004: EngineRight
+    2300006: GunLeft
+    2300008: GunRight
+    2300010: JammerLeft
+    2300012: JammerRight
+    2300014: NozzleLeft
+    2300016: NozzleRight
+    2300018: SpaceShip2
+    3300000: Cockpit
+    3300002: EngineLeft
+    3300004: EngineRight
+    3300006: GunLeft
+    3300008: GunRight
+    3300010: JammerLeft
+    3300012: JammerRight
+    3300014: NozzleLeft
+    3300016: NozzleRight
+    3300018: SpaceShip2
+    4300000: SpaceShip2
+    4300002: Cockpit
+    4300004: GunLeft
+    4300006: JammerLeft
+    4300008: GunRight
+    4300010: JammerRight
+    4300012: NozzleLeft
+    4300014: NozzleRight
+    4300016: EngineLeft
+    4300018: EngineRight
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
