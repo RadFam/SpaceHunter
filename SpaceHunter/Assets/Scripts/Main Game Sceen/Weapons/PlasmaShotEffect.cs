@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlasmaShotEffect : MonoBehaviour {
 
-    public LayerMask layerMask;
+    public LayerMask obstacleMask;
+    public LayerMask playerMask;
+    public LayerMask enemyMask;
     
     private bool canFly;
     private Vector3 oldPosition = new Vector3(0.0f, 0.0f, 0.0f);
@@ -38,12 +40,17 @@ public class PlasmaShotEffect : MonoBehaviour {
             if (Physics.Linecast(oldPosition, gameObject.transform.position, out hit))
             {
                 //Debug.Log("Plasma shot hit collider: " + hit.collider.gameObject.layer);
-                if (hit.collider.gameObject.layer == layerMask.value)
+                if ((hit.collider.gameObject.layer == playerMask.value) || (hit.collider.gameObject.layer == enemyMask.value))
                 {
                     //Debug.Log("Plasma shot hit: " + layerMask);
                     myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
                     EndScript();
-                }  
+                }
+                if (hit.collider.gameObject.layer == obstacleMask.value)
+                {
+                    // Вызовем здесь для примера эффект взрыва плазменного заряда о поверхность
+                    EndScript();
+                }
             }
 
             oldPosition = gameObject.transform.position;
