@@ -40,15 +40,17 @@ public class PlasmaShotEffect : MonoBehaviour {
             if (Physics.Linecast(oldPosition, gameObject.transform.position, out hit))
             {
                 //Debug.Log("Plasma shot hit collider: " + hit.collider.gameObject.layer);
-                if ((hit.collider.gameObject.layer == playerMask.value) || (hit.collider.gameObject.layer == enemyMask.value))
+                //if ((hit.collider.gameObject.layer == playerMask.value) || (hit.collider.gameObject.layer == enemyMask.value))
+                if ((hit.collider.tag == "Player") || (hit.collider.tag == "Enemy"))
                 {
-                    //Debug.Log("Plasma shot hit: " + layerMask);
                     myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
                     EndScript();
                 }
-                if (hit.collider.gameObject.layer == obstacleMask.value)
+                //if (hit.collider.gameObject.layer == 11)
+                if (hit.collider.tag == "Planet")
                 {
                     // Вызовем здесь для примера эффект взрыва плазменного заряда о поверхность
+                    PS.PlayEffect(hit.point);
                     EndScript();
                 }
             }

@@ -24,6 +24,13 @@ public class PlasmaShot : MonoBehaviour {
     {
         PSE.SetPosition(position, rotation);
     }
+
+    public void PlayEffect(Vector3 coord)
+    {
+        PlasmaExplosionEffect pee = LP.listFreeExplodes[0].GetComponent<PlasmaExplosionEffect>();
+        pee.gameObject.SetActive(true);
+        pee.SetCoords(coord, -1 * gameObject.transform.forward);
+    }
 	
 	// Update is called once per frame
 	void Update () 

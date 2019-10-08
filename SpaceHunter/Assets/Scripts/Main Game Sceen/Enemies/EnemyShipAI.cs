@@ -221,4 +221,9 @@ public class EnemyShipAI : MonoBehaviour {
             ForgetTarget();
         }
     }
+
+    public void OnMainPlayerDefeat()
+    {
+        ForgetTarget();
+    }
 }

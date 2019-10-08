@@ -10,9 +10,10 @@ public class Damagable : MonoBehaviour {
     public delegate void DeathDelegate();
     public DeathDelegate deathDel;
 
-    public int getCurrentHealth
+    public int currentHealth
     {
         get { return healthPoints; }
+        set { healthPoints = value; }
     }
 
     void OnEnable()
@@ -32,5 +33,12 @@ public class Damagable : MonoBehaviour {
                 deathDel();
             }
         }
+    }
+
+    public void TakeUltimateDamage()
+    {
+        healthPoints = 0;
+        invulnerableAfterDamage = true;
+        deathDel();
     }
 }
