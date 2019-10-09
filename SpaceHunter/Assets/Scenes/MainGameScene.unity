@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6231,7 +6231,7 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: 88964ddb0eef4dc42991f14abccccd44, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -21247,6 +21247,90 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: a2db2fe8cbc3d194088373520695eb61,
     type: 3}
   m_PrefabInternal: {fileID: 1884752678}
+--- !u!1001 &377133174
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 764663057}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0088
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0084
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.06289992
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_Name
+      value: FlameCone
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a87bfdf93629c1345ac47084b1023d52, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+  m_IsPrefabAsset: 0
+--- !u!1 &377133175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 21883d827cd7ccf49b689bb4cd005903,
+    type: 3}
+  m_PrefabInternal: {fileID: 377133174}
+--- !u!23 &377133176 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 21883d827cd7ccf49b689bb4cd005903,
+    type: 3}
+  m_PrefabInternal: {fileID: 377133174}
+--- !u!114 &377133177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 377133175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78821509140f1f444a4fbf623e10edb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myRenderer: {fileID: 377133176}
 --- !u!1 &387188411
 GameObject:
   m_ObjectHideFlags: 0
@@ -30961,6 +31045,90 @@ MonoBehaviour:
   PSE: {fileID: 433910885}
   timer: 0
   timeToLive: 3
+--- !u!1001 &466304720
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2034003382}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0088
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0084
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0629
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_Name
+      value: FlameCone
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.1632385
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a87bfdf93629c1345ac47084b1023d52, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 21883d827cd7ccf49b689bb4cd005903, type: 3}
+  m_IsPrefabAsset: 0
+--- !u!1 &466304721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 21883d827cd7ccf49b689bb4cd005903,
+    type: 3}
+  m_PrefabInternal: {fileID: 466304720}
+--- !u!23 &466304722 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 21883d827cd7ccf49b689bb4cd005903,
+    type: 3}
+  m_PrefabInternal: {fileID: 466304720}
+--- !u!114 &466304723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 466304721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78821509140f1f444a4fbf623e10edb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myRenderer: {fileID: 466304722}
 --- !u!1 &473798369
 GameObject:
   m_ObjectHideFlags: 0
@@ -106471,7 +106639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1509487590
 Transform:
   m_ObjectHideFlags: 0
@@ -106479,12 +106647,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1509487589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0164, y: 0.008, z: -0.0598}
+  m_LocalPosition: {x: -0.0145, y: 0.008, z: -0.0598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2034003382}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1509487591
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -106528,16 +106696,16 @@ ParticleSystemRenderer:
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 2
+  m_LengthScale: 4
   m_SortingFudge: 60
-  m_NormalDirection: 0
+  m_NormalDirection: 1
   m_RenderAlignment: 3
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300004, guid: bb4618b3dfcc8f04dbc7adc2ec8ac566, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -106790,7 +106958,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.9
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -106896,7 +107064,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -106948,7 +107116,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -107001,7 +107169,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -107054,9 +107222,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotation:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 0.2443461
-      minScalar: -0.2443461
+      minMaxState: 0
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -107106,7 +107274,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 20
+    maxNumParticles: 40
     size3D: 1
     rotation3D: 0
     gravityModifier:
@@ -107166,7 +107334,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 0
+    angle: 0.01
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -107196,7 +107364,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.3
+      value: 0.2
       mode: 0
       spread: 0
       speed:
@@ -107315,7 +107483,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 40
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -140979,7 +141147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1997785151
 Transform:
   m_ObjectHideFlags: 0
@@ -141045,7 +141213,7 @@ ParticleSystemRenderer:
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300004, guid: bb4618b3dfcc8f04dbc7adc2ec8ac566, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -141298,7 +141466,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.9
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -141404,7 +141572,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
