@@ -25,7 +25,7 @@ public class ListParticle : MonoBehaviour
     {
         if (canUpdateCanvas)
         {
-            CPCS.UpdatePlasma(listFreeObjects.Count, listFreeObjects.Count + listBusyObjects.Count);
+            //CPCS.UpdatePlasma(listFreeObjects.Count, listFreeObjects.Count + listBusyObjects.Count);
         }
     }
 }
