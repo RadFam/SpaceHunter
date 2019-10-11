@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Damager : MonoBehaviour {
 
-    public int damage = 1;
+    public float damage = 1.0f;
     public LayerMask layerMask;
 
     public void MakeDamage(Damagable objectToDamage)

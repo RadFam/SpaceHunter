@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour {
 
-    private int healthPoints = 10;
+    private float healthPoints = 10.0f;
+    private float shieldPoints = 0.0f;
     private bool invulnerableAfterDamage = false;
 
+    public GameObject myObject;
     public delegate void DeathDelegate();
     public DeathDelegate deathDel;
+    public delegate void PlayerUpdateDelegate(float v1, float v2);
+    public PlayerUpdateDelegate playerUpDel;
 
-    public int currentHealth
+    public float currentHealth
     {
         get { return healthPoints; }
         set { healthPoints = value; }
+    }
+    public float currentShield
+    {
+        get { return shieldPoints; }
+        set { shieldPoints = value; }
     }
 
     void OnEnable()
@@ -21,12 +30,36 @@ public class Damagable : MonoBehaviour {
         invulnerableAfterDamage = false;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (!invulnerableAfterDamage)
         {
-            healthPoints -= damage;
-            if (healthPoints <= 0)
+            float halfDamage_1 = damage / 2.0f;
+            float halfDamage_2 = damage / 2.0f;
+            healthPoints -= halfDamage_1;
+
+            float minusOfShield = halfDamage_2 / 2.0f;
+            if (minusOfShield < shieldPoints)
+            {
+                shieldPoints -= minusOfShield;
+            }
+            else if (minusOfShield == shieldPoints)
+            {
+                shieldPoints = 0.0f;
+            }
+            else if (minusOfShield > shieldPoints)
+            {
+                minusOfShield -= shieldPoints;
+                shieldPoints = 0.0f;
+                healthPoints -= minusOfShield * 2.0f;
+            }
+
+            if (myObject.tag == "Player")
+            {
+                playerUpDel(healthPoints, shieldPoints);
+            }
+
+            if (healthPoints <= 0.0f)
             {
                 invulnerableAfterDamage = true;
                 // Запускаем процедуру гибели объекта

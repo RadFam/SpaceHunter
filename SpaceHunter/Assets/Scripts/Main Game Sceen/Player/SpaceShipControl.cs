@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpaceShipControl : MonoBehaviour {
 
     public GameEvent deathEvent;
+
+    private ControlPanelCanvasScript CPCS;
     
     Damagable myDamagable;
 
@@ -12,8 +14,15 @@ public class SpaceShipControl : MonoBehaviour {
 	void Start () 
     {
         myDamagable = gameObject.GetComponent<Damagable>();
-        myDamagable.currentHealth = 20;
         myDamagable.deathDel = OnPlayerDeath;
+        myDamagable.playerUpDel = OnPlasmaWound;
+
+        CPCS = FindObjectOfType<ControlPanelCanvasScript>();
+        CommonSceneParams CSP = FindObjectOfType<CommonSceneParams>();
+
+        myDamagable.currentHealth = CSP.pIH;
+        myDamagable.currentShield = CSP.pIS;
+        myDamagable.myObject = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -29,5 +38,11 @@ public class SpaceShipControl : MonoBehaviour {
         // Play explode animation
 
         // Start final titers, go to menu scene
+    }
+
+    public void OnPlasmaWound(float v1, float v2)
+    {
+        CPCS.UpdateHealth(v1);
+        CPCS.UpdateShield(v2);
     }
 }

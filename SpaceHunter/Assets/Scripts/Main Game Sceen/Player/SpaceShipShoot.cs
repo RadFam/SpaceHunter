@@ -13,6 +13,7 @@ public class SpaceShipShoot : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        allPlasmaShots.lpUC = true;
         timer = deltaTime;
     }
 
@@ -31,8 +32,10 @@ public class SpaceShipShoot : MonoBehaviour {
                     PlasmaShot rightPlasma = allPlasmaShots.listFreeObjects[1].GetComponent<PlasmaShot>();
                     leftPlasma.gameObject.SetActive(true);
                     leftPlasma.SetCoords(leftGun.transform.position, leftGun.transform.rotation);
+                    allPlasmaShots.UpdateCanvas();
                     rightPlasma.gameObject.SetActive(true);
                     rightPlasma.SetCoords(rightGun.transform.position, rightGun.transform.rotation);
+                    allPlasmaShots.UpdateCanvas();
                 }
             }
         }

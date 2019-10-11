@@ -48,6 +48,7 @@ public class PlasmaShot : MonoBehaviour {
         MR.enabled = false;
         LP.listFreeObjects.Add(gameObject);
         LP.listBusyObjects.RemoveAt(0);
+        LP.UpdateCanvas();
         gameObject.SetActive(false);
     }
 }
