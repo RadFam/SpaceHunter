@@ -21,11 +21,14 @@ public class PlanetMoveScript : MonoBehaviour {
     {
         transform.position = initPosition;
         transform.eulerAngles = new Vector3(polarAxisInclinationX, 0.0f, polarAxisInclinationZ);
+
+        // By default, Sun is in point (0, 0, 0)
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
         transform.RotateAround(transform.position, transform.up, selfRotationSpeed * Time.deltaTime);
+        
 	}
 }

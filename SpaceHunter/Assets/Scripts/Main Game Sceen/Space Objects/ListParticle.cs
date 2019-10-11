@@ -15,6 +15,11 @@ public class ListParticle : MonoBehaviour
     public ControlPanelCanvasScript CPCS;
     private bool canUpdateCanvas = false;
 
+    void Start()
+    { 
+        CPCS = FindObjectOfType<ControlPanelCanvasScript>();
+    }
+
     public bool lpUC
     {
         set {canUpdateCanvas = value;}
@@ -25,7 +30,7 @@ public class ListParticle : MonoBehaviour
     {
         if (canUpdateCanvas)
         {
-            //CPCS.UpdatePlasma(listFreeObjects.Count, listFreeObjects.Count + listBusyObjects.Count);
+            CPCS.UpdatePlasma(listFreeObjects.Count, listFreeObjects.Count + listBusyObjects.Count);
         }
     }
 }

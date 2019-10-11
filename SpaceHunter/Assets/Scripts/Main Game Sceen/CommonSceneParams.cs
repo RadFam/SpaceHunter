@@ -10,7 +10,6 @@ public class CommonSceneParams : MonoBehaviour {
 
     private float lastFuelVolume;
 
-    private SpaceShipControl SSC;
     private List<EnemyShipAI> enemies;
     private ControlPanelCanvasScript CPCS;
 
@@ -39,7 +38,10 @@ public class CommonSceneParams : MonoBehaviour {
 
 	void Start () 
     {
-		
+		CPCS = FindObjectOfType<ControlPanelCanvasScript>();
+
+        CPCS.UpdateHealth(playerInitHealth);
+        //CPCS.UpdateShield(playerInitShield);
 	}
 	
 	// Update is called once per frame

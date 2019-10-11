@@ -7,6 +7,7 @@ public class SpaceShipControl : MonoBehaviour {
     public GameEvent deathEvent;
 
     private ControlPanelCanvasScript CPCS;
+    private CommonSceneParams CSP;
     
     Damagable myDamagable;
 
@@ -18,7 +19,7 @@ public class SpaceShipControl : MonoBehaviour {
         myDamagable.playerUpDel = OnPlasmaWound;
 
         CPCS = FindObjectOfType<ControlPanelCanvasScript>();
-        CommonSceneParams CSP = FindObjectOfType<CommonSceneParams>();
+        CSP = FindObjectOfType<CommonSceneParams>();
 
         myDamagable.currentHealth = CSP.pIH;
         myDamagable.currentShield = CSP.pIS;
