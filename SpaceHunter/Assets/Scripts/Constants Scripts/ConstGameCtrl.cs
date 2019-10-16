@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConstGameCtrl : MonoBehaviour {
 
-    public enum PrizeType { Gold, Mineral_01, Mineral_02, Mineral_03, Mineral_04, Mineral_05, Mineral_06, Mineral_07, Mineral_08, Mineral_09, Mineral_10,
+    public enum PlanetSurprize { Gold, Health, Shield, Fuel, Mineral_01, Mineral_02, Mineral_03, Mineral_04, Mineral_05, Mineral_06, Mineral_07, Mineral_08, Mineral_09, Mineral_10,
                                 Mineral_11, Mineral_12, Mineral_13, Mineral_14, Mineral_15, Mineral_16, Mineral_17, Mineral_18, Mineral_19, Mineral_20,
                                 Mineral_21, Mineral_22, Mineral_23, Mineral_24, Mineral_25, Mineral_26, Mineral_27, Mineral_28, Mineral_29, Mineral_30,
                                 Mineral_31, Mineral_32, Mineral_33, Mineral_34, Mineral_35, Mineral_36, Mineral_37, Mineral_38, Mineral_39, Mineral_40,

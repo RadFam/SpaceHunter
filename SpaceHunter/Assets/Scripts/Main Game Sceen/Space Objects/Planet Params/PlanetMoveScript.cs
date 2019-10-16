@@ -52,6 +52,10 @@ public class PlanetMoveScript : MonoBehaviour {
     {
         //transform.RotateAround(transform.position, transform.up, selfRotationSpeed * Time.deltaTime);
 
+        // !!!!!!!!!!!!!!!!!!
+        // Commented, while treasure part is making....
+        
+        /*
         float step = orbitalRevolutionSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, pointCoord, step);
 
@@ -64,5 +68,6 @@ public class PlanetMoveScript : MonoBehaviour {
             }
             pointCoord = posToWalk[pointCount];
         }
+        */
 	}
 }

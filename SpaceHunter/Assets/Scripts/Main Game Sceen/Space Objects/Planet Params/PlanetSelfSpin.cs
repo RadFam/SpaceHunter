@@ -22,12 +22,13 @@ public class PlanetSelfSpin : MonoBehaviour {
 
         initPos = new Vector3(0.0f, 0.0f, 0.0f);
         transform.localPosition = initPos;
-        transform.localEulerAngles = new Vector3(-90+pAIX, 0.0f, pAIZ);
+        transform.localEulerAngles = new Vector3(-90+pAIX, pAIZ, 0.0f);
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () 
     {
-        transform.RotateAround(gameObject.transform.localPosition, gameObject.transform.up, sRS * Time.deltaTime);
+        transform.RotateAround(gameObject.transform.position, gameObject.transform.up, sRS * Time.deltaTime);
+        //Debug.Log(gameObject.transform.up);
 	}
 }
