@@ -12,7 +12,7 @@ public struct GeoPrize
     public Material prizeMaterial;
 }
 
-[CreateAssetMenu(fileName = "FullPrizeCollection", menuName = "Prize Collection", order = 53)]
+[CreateAssetMenu(fileName = "FullPrizeCollection", menuName = "ScriptableObjects/Prize Collection", order = 2)]
 public class PrizeCollection : ScriptableObject 
 {
     [SerializeField]

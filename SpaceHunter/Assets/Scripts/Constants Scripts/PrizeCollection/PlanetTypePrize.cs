@@ -10,8 +10,8 @@ public struct PlanetPrizeByLevels
     public List<float> probabilityByLevel;
 }
 
-[CreateAssetMenu(fileName = "PlanetPrizeByLevels", menuName = "Planet Treasure By Level and Type", order = 54)]
-public class PlanetTypePrize
+[CreateAssetMenu(fileName = "PlanetPrizeByLevels", menuName = "ScriptableObjects/Planet Treasure", order = 3)]
+public class PlanetTypePrize : ScriptableObject
 {
     [SerializeField]
     private List<PlanetPrizeByLevels> allPlanetPrizes;

@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1639104674449338}
   m_IsPrefabAsset: 1
+--- !u!1 &1382198613421692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4643477500432786}
+  m_Layer: 0
+  m_Name: Mineral
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1539459144443176
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +73,7 @@ GameObject:
   - component: {fileID: 198670546418701126}
   - component: {fileID: 199229125535372550}
   - component: {fileID: 136605078127316668}
+  - component: {fileID: 114605058723228028}
   m_Layer: 0
   m_Name: PrizeAppear
   m_TagString: Untagged
@@ -121,6 +137,19 @@ Transform:
   m_Father: {fileID: 4990867782502324}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4643477500432786
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1382198613421692}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 17.9}
+  m_LocalScale: {x: 1, y: 1, z: 3}
+  m_Children: []
+  m_Father: {fileID: 4990867782502324}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4990867782502324
 Transform:
   m_ObjectHideFlags: 1
@@ -134,6 +163,7 @@ Transform:
   - {fileID: 4491531133700712}
   - {fileID: 4605823283138250}
   - {fileID: 4274548753882446}
+  - {fileID: 4643477500432786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -197,6 +227,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114605058723228028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639104674449338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5d29ec9a9833844901e0c825a69e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  innerMat: {fileID: 0}
+  innerMesh: {fileID: 0}
+  myMineral: {fileID: 0}
+  myNum: 0
+  myName: 
 --- !u!136 &136096941049211206
 CapsuleCollider:
   m_ObjectHideFlags: 1

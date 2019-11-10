@@ -11,6 +11,9 @@ public class PlanetTreasure : MonoBehaviour
     private Damagable myDamagable;
     private CommonSceneParams CSP;
 
+    public TresureControl planetTreasurePrefab;
+    // public ResourcePrizeControl planetResourcePrefab;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -36,6 +39,16 @@ public class PlanetTreasure : MonoBehaviour
         List<float> probabs = possiblePrizes.GetProbabilitiesByLevel(currSceneLevel);
         float prob = CSP.GetRandomFloat();
         ConstGameCtrl.PlanetSurprize prize = possiblePrizes.GetNameByProbability(currSceneLevel, prob);
+
+        int prizeNum = (int)prize;
+
+        if (prizeNum > 3)
+        {
+            TresureControl TC = Instantiate(planetTreasurePrefab);
+            TC.SetMineralParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh);
+            //TC.innerMat = ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial;
+            //TC.innerMesh = ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh;
+        }
 
     }
 }
