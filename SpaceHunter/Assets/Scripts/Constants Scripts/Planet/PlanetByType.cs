@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlanetByType
 {
     public string planetName;
+    public float planetHealth;
     public MeshFilter planetMesh;
     public Material planetMaterial;
     public PlanetPrizeByLevels planetTreasures;

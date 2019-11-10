@@ -13,6 +13,8 @@ public class Damagable : MonoBehaviour {
     public DeathDelegate deathDel;
     public delegate void PlayerUpdateDelegate(float v1, float v2);
     public PlayerUpdateDelegate playerUpDel;
+    public delegate void PlanetChangeHealth(float val);
+    public PlanetChangeHealth planetChHlth;
 
     public float currentHealth
     {
@@ -57,6 +59,11 @@ public class Damagable : MonoBehaviour {
             if (myObject.tag == "Player")
             {
                 playerUpDel(healthPoints, shieldPoints);
+            }
+
+            if (myObject.tag == "Planet")
+            {
+                planetChHlth(healthPoints);
             }
 
             if (healthPoints <= 0.0f)

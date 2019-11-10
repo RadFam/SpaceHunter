@@ -13,6 +13,8 @@ public class CommonSceneParams : MonoBehaviour {
     private List<EnemyShipAI> enemies;
     private ControlPanelCanvasScript CPCS;
 
+    public int currLevel;
+
     public float pIH
     {
         get { return playerInitHealth; }
@@ -38,11 +40,17 @@ public class CommonSceneParams : MonoBehaviour {
 
 	void Start () 
     {
+        Random.InitState(42);
 		CPCS = FindObjectOfType<ControlPanelCanvasScript>();
 
         CPCS.UpdateHealth(playerInitHealth);
         //CPCS.UpdateShield(playerInitShield);
 	}
+
+    public float GetRandomFloat()
+    {
+        return Random.Range(0.0f, 1.0f);
+    }
 	
 	// Update is called once per frame
 	void Update () 

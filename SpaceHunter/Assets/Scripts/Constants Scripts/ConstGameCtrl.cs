@@ -15,6 +15,9 @@ public class ConstGameCtrl : MonoBehaviour {
     private List<GeoPrize> allPrizes;
 
     public List<GeoPrize> playerCollection;
+    public int playerCurrentGold;
+    public Dictionary<string, int> playerInventory;
+
 
 	// Use this for initialization
 	void Start () 
@@ -25,14 +28,35 @@ public class ConstGameCtrl : MonoBehaviour {
         {
             instance = this;
             allPrizes = mainPC.GamePrize;
+            playerInventory = new Dictionary<string, int>();
         }	
 	}
+
+    public void MoveMineralsFromInventoryToPlayerCollection()
+    {
+        List<string> tmpMineralNames = new List<string>();
+        foreach (KeyValuePair<string, int> keyValue in playerInventory)
+        {
+            PlayerGetNewCollectible(keyValue.Key);
+            int res = keyValue.Value - 1;
+            if (res == 0)
+            { 
+                tmpMineralNames.Add(keyValue.Key);
+            }
+        }
+
+        // Если что, останутся минералы на продажу
+        foreach (string s in tmpMineralNames)
+        {
+            playerInventory.Remove(s);
+        }
+    }
 
     public void PlayerGetNewCollectible(string mineralName)
     {
         int ind = allPrizes.FindIndex(x => x.prizeName == mineralName);
         int ind_2 = playerCollection.FindIndex(x => x.prizeName == mineralName);
-        if (ind_2 != -1)
+        if (ind_2 == -1)
         {
             playerCollection.Add(allPrizes[ind]);
         }

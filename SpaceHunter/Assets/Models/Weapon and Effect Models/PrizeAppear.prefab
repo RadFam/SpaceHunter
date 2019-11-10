@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4990867782502324}
   - component: {fileID: 198670546418701126}
   - component: {fileID: 199229125535372550}
+  - component: {fileID: 136605078127316668}
   m_Layer: 0
   m_Name: PrizeAppear
   m_TagString: Untagged
@@ -127,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1639104674449338}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7.7326946, y: 11.690567, z: -12.580872}
+  m_LocalPosition: {x: 7.7326946, y: 11.88, z: -12.580872}
   m_LocalScale: {x: 1, y: 1, z: 0.38536}
   m_Children:
   - {fileID: 4491531133700712}
@@ -209,6 +210,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!136 &136605078127316668
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639104674449338}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 5
+  m_Height: 39.54
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 20.3}
 --- !u!198 &198670546418701126
 ParticleSystem:
   m_ObjectHideFlags: 1
