@@ -241,8 +241,12 @@ MonoBehaviour:
   innerMat: {fileID: 0}
   innerMesh: {fileID: 0}
   myMineral: {fileID: 0}
+  myCollider: {fileID: 136605078127316668}
   myNum: 0
   myName: 
+  speedUp: 3
+  maxHeight: 0
+  canMove: 0
 --- !u!136 &136096941049211206
 CapsuleCollider:
   m_ObjectHideFlags: 1

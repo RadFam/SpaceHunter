@@ -56,6 +56,8 @@ public class Damagable : MonoBehaviour {
                 healthPoints -= minusOfShield * 2.0f;
             }
 
+            Debug.Log("My Current health points are: " + healthPoints.ToString());
+
             if (myObject.tag == "Player")
             {
                 playerUpDel(healthPoints, shieldPoints);

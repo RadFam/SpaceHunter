@@ -8,9 +8,15 @@ public class TresureControl : MonoBehaviour {
     public MeshFilter innerMesh;
 
     public GameObject myMineral;
+    public Collider myCollider;
 
     public int myNum;
     public string myName;
+
+    public float speedUp = 3.0f;
+    public float maxHeight;
+    public bool canMove = false;
+
 
     //public Animator myAnim;
 
@@ -38,5 +44,23 @@ public class TresureControl : MonoBehaviour {
 
         // Само отключение элемента
         Destroy(gameObject);
+    }
+
+    public void StartMove(float val)
+    {
+        maxHeight = val;
+        canMove = true;
+    }
+
+    void Update()
+    {
+        if (canMove)
+        {
+            if (transform.localPosition.z >= maxHeight)
+            {
+                myCollider.enabled = true;
+                canMove = false;
+            }
+        }
     }
 }

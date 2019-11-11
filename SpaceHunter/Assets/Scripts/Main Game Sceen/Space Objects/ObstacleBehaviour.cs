@@ -23,6 +23,11 @@ public class ObstacleBehaviour : MonoBehaviour {
         basicSize = baseSizes.x;
 	}
 
+    public float GetMyRadii()
+    {
+        return gameObject.GetComponent<Collider>().bounds.size.x;
+    }
+
     public Vector3 GetLeavePoint(Vector3 wayPoint)
     {
         Vector3 ans = pointsOfLeaving[0].position;
