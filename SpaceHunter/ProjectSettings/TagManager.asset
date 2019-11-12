@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Planet
+  - Sun
+  - Comet
+  - Prize
+  - Resource
   layers:
   - Default
   - TransparentFX

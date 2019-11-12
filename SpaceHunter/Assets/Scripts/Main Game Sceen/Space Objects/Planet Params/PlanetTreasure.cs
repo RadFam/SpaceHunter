@@ -39,9 +39,7 @@ public class PlanetTreasure : MonoBehaviour
     }
     
     public void OnPlanetTreasure()
-    {
-        Debug.Log("Start opening my planet treasure");
-        
+    {   
         List<float> probabs = possiblePrizes.GetProbabilitiesByLevel(currSceneLevel);
         //float prob = CSP.GetRandomFloat();
         float prob = 0.7f;
@@ -52,14 +50,11 @@ public class PlanetTreasure : MonoBehaviour
         if (prizeNum > 3)
         {
             TresureControl TC = Instantiate(planetTreasurePrefab);
-            TC.SetMineralParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh);
+            TC.SetMineralParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
             TC.transform.SetParent(gameObject.transform);
             TC.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-            TC.transform.localScale = new Vector3(1.0f, 1.0f, 3.0f);
             TC.myCollider.enabled = false;
-            TC.StartMove(myRadii);
-            //TC.innerMat = ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial;
-            //TC.innerMesh = ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh;
+            TC.StartMove(myRadii/2);
         }
 
     }

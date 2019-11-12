@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114605058723228028}
   m_Layer: 0
   m_Name: PrizeAppear
-  m_TagString: Untagged
+  m_TagString: Prize
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   innerMat: {fileID: 0}
   innerMesh: {fileID: 0}
-  myMineral: {fileID: 0}
+  myMineral: {fileID: 1382198613421692}
   myCollider: {fileID: 136605078127316668}
   myNum: 0
   myName: 

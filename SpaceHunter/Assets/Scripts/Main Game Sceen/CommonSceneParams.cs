@@ -35,6 +35,8 @@ public class CommonSceneParams : MonoBehaviour {
         playerInitShield = 30;
         playerFuelVolume = 360;
 
+        currLevel = 0;
+
         lastFuelVolume = playerFuelVolume;
     }
 

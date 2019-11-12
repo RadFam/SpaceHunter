@@ -17,6 +17,10 @@ public class TresureControl : MonoBehaviour {
     public float maxHeight;
     public bool canMove = false;
 
+    private Vector3 initPos;
+    private Vector3 endPos;
+    private float journeyLength;
+    private float startTime;
 
     //public Animator myAnim;
 
@@ -25,12 +29,15 @@ public class TresureControl : MonoBehaviour {
         //myAnim.Play();
     }
 
-    public void SetMineralParams(Material mat, MeshFilter mesh)
+    public void SetMineralParams(Material mat, MeshFilter mesh, string name)
     {
         MeshFilter my_mf = (MeshFilter)myMineral.AddComponent<MeshFilter>();
         MeshRenderer my_mr = (MeshRenderer)myMineral.AddComponent<MeshRenderer>();
-        my_mf = mesh;
+        my_mf.mesh = mesh.sharedMesh;
         my_mr.material = mat;
+        myMineral.transform.localScale = new Vector3(100.0f, 100.0f, 900.0f);
+
+        myName = name;
     }
 
     public string ReturnTreasureName()
@@ -49,6 +56,11 @@ public class TresureControl : MonoBehaviour {
     public void StartMove(float val)
     {
         maxHeight = val;
+        initPos = gameObject.transform.localPosition;
+        endPos = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + maxHeight, gameObject.transform.localPosition.z);
+        journeyLength = maxHeight;
+        startTime = Time.time;
+
         canMove = true;
     }
 
@@ -56,7 +68,11 @@ public class TresureControl : MonoBehaviour {
     {
         if (canMove)
         {
-            if (transform.localPosition.z >= maxHeight)
+            float distCovered = (Time.time - startTime)*speedUp;
+            float fractionOfJourney = distCovered/journeyLength;
+            gameObject.transform.localPosition = Vector3.Lerp(initPos, endPos, fractionOfJourney);
+            
+            if (transform.localPosition.y >= maxHeight)
             {
                 myCollider.enabled = true;
                 canMove = false;

@@ -34,7 +34,21 @@ public class ConstGameCtrl : MonoBehaviour {
 
     public GeoPrize GetPrizeParams(int num)
     {
-        return allPrizes[num];
+        return allPrizes[0];
+        //return allPrizes[num];
+    }
+
+    public void AddMineralToInventory(string minName)
+    {
+        if (playerInventory.ContainsKey(minName))
+        {
+            int val = playerInventory[minName];
+            playerInventory[minName] = val + 1;
+        }
+        else
+        {
+            playerInventory.Add(minName, 1);
+        }
     }
 
     public void MoveMineralsFromInventoryToPlayerCollection()

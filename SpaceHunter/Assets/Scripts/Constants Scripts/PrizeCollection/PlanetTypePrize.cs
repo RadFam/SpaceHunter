@@ -26,10 +26,11 @@ public class PlanetTypePrize : ScriptableObject
         List<float> ansList = new List<float>();
 
         int cnt = 0;
-        while ((level >= allPlanetPrizes[0].acceptableLevels[cnt]) && (cnt < allPlanetPrizes[0].acceptableLevels.Count))
+        while ((cnt < allPlanetPrizes[0].acceptableLevels.Count) && (level >= allPlanetPrizes[0].acceptableLevels[cnt]))
         {
             cnt++;
         }
+        cnt--;
 
         foreach (PlanetPrizeByLevels ppbl in allPlanetPrizes)
         {
@@ -46,10 +47,11 @@ public class PlanetTypePrize : ScriptableObject
         List<float> cummulProbList = new List<float>();
 
         int cnt = 0;
-        while ((level >= allPlanetPrizes[0].acceptableLevels[cnt]) && (cnt < allPlanetPrizes[0].acceptableLevels.Count))
+        while ((cnt < allPlanetPrizes[0].acceptableLevels.Count) && (level >= allPlanetPrizes[0].acceptableLevels[cnt]))
         {
             cnt++;
         }
+        cnt--;
 
         cummulProbList.Add(allPlanetPrizes[0].probabilityByLevel[cnt]);
 

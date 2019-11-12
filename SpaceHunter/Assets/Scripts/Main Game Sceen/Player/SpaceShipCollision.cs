@@ -12,5 +12,18 @@ public class SpaceShipCollision : MonoBehaviour {
         {
             myDamagable.TakeUltimateDamage();
         }
+
+        if (other.gameObject.tag == "Prize") 
+        {
+            TresureControl TC = other.gameObject.GetComponent<TresureControl>();
+            string prizeName = TC.ReturnTreasureName();
+            ConstGameCtrl.instance.AddMineralToInventory(prizeName);
+            TC.SelfDisable();
+        }
+
+        if (other.gameObject.tag == "Resource")
+        {
+
+        }
     }
 }
