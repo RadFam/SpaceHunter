@@ -12,6 +12,11 @@ public class PlanetTreasure : MonoBehaviour
     private CommonSceneParams CSP;
 
     public TresureControl planetTreasurePrefab;
+    public ResourceControl healthPrefab;
+    public ResourceControl shieldPrefab;
+    public ResourceControl fuelPrefab;
+    public ResourceControl moneyPrefab;
+
     public float myRadii;
     // public ResourcePrizeControl planetResourcePrefab;
 
@@ -47,7 +52,47 @@ public class PlanetTreasure : MonoBehaviour
 
         int prizeNum = (int)prize;
 
-        if (prizeNum > 3)
+        if (prizeNum == 0) // Gold
+        {
+            ResourceControl RC = Instantiate(moneyPrefab);
+            RC.SetParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
+            RC.transform.SetParent(gameObject.transform);
+            RC.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            RC.myCollider.enabled = false;
+            RC.StartMove(myRadii / 2);
+        }
+
+        if (prizeNum == 1) // Health
+        {
+            ResourceControl RC = Instantiate(healthPrefab);
+            RC.SetParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
+            RC.transform.SetParent(gameObject.transform);
+            RC.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            RC.myCollider.enabled = false;
+            RC.StartMove(myRadii / 2);
+        }
+
+        if (prizeNum == 2) // Shield
+        {
+            ResourceControl RC = Instantiate(shieldPrefab);
+            RC.SetParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
+            RC.transform.SetParent(gameObject.transform);
+            RC.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            RC.myCollider.enabled = false;
+            RC.StartMove(myRadii / 2);
+        }
+
+        if (prizeNum == 3) // Fuel
+        {
+            ResourceControl RC = Instantiate(fuelPrefab);
+            RC.SetParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
+            RC.transform.SetParent(gameObject.transform);
+            RC.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            RC.myCollider.enabled = false;
+            RC.StartMove(myRadii / 2);
+        }
+
+        if (prizeNum > 3) // Minerals
         {
             TresureControl TC = Instantiate(planetTreasurePrefab);
             TC.SetMineralParams(ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMaterial, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeMesh, ConstGameCtrl.instance.GetPrizeParams(prizeNum).prizeName);
