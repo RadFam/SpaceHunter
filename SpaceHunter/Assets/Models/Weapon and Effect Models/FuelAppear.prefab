@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myCollider: {fileID: 135798791690596452}
   myNum: 0
-  myName: 
+  myName: Fuel
   speedUp: 3
   maxHeight: 0
   canMove: 0

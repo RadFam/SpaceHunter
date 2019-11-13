@@ -23,7 +23,30 @@ public class SpaceShipCollision : MonoBehaviour {
 
         if (other.gameObject.tag == "Resource")
         {
+            string resName = other.gameObject.GetComponent<ResourceControl>().myName;
+            ControlPanelCanvasScript CPCS = FindObjectOfType<ControlPanelCanvasScript>();
 
+            if (name == "Health")
+            {
+                myDamagable.RestoreHealth();
+                CPCS.UpdateHealth(myDamagable.currentHealth);
+            }
+
+            if (name == "Shield")
+            {
+                myDamagable.RestoreShield();
+                CPCS.UpdateShield(myDamagable.currentShield);
+            }
+
+            if (name == "Fuel")
+            { 
+            }
+
+            if (name == "Money")
+            { 
+            }
+
+            other.gameObject.GetComponent<ResourceControl>().SelfDisable();
         }
     }
 }

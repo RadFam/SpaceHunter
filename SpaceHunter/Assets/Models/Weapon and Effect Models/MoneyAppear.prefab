@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myCollider: {fileID: 135148649982075426}
   myNum: 0
-  myName: 
+  myName: Money
   speedUp: 3
   maxHeight: 0
   canMove: 0

@@ -257,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myCollider: {fileID: 135478443306782746}
   myNum: 0
-  myName: 
+  myName: Shield
   speedUp: 3
   maxHeight: 0
   canMove: 0

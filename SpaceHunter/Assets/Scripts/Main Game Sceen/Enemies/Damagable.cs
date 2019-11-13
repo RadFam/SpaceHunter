@@ -6,6 +6,10 @@ public class Damagable : MonoBehaviour {
 
     private float healthPoints = 10.0f;
     private float shieldPoints = 0.0f;
+
+    private float maxHealthPoints;
+    private float maxShieldPoints;
+
     private bool invulnerableAfterDamage = false;
 
     public GameObject myObject;
@@ -25,6 +29,17 @@ public class Damagable : MonoBehaviour {
     {
         get { return shieldPoints; }
         set { shieldPoints = value; }
+    }
+
+    public float maxHealth
+    {
+        get { return maxHealthPoints; }
+        set { maxHealthPoints = value; }
+    }
+    public float maxShield
+    {
+        get { return maxShieldPoints; }
+        set { maxShieldPoints = value; }
     }
 
     void OnEnable()
@@ -61,6 +76,9 @@ public class Damagable : MonoBehaviour {
             if (myObject.tag == "Player")
             {
                 playerUpDel(healthPoints, shieldPoints);
+                ControlPanelCanvasScript CPCS = FindObjectOfType<ControlPanelCanvasScript>();
+                CPCS.UpdateHealth(healthPoints);
+                CPCS.UpdateShield(shieldPoints);
             }
 
             if (myObject.tag == "Planet")
@@ -77,9 +95,27 @@ public class Damagable : MonoBehaviour {
         }
     }
 
+    public void RestoreHealth() // Specially for player
+    {
+        healthPoints += maxHealthPoints / 4;
+        healthPoints = Mathf.Min(healthPoints, maxHealthPoints);
+    }
+
+    public void RestoreShield() // Specially for player
+    {
+        shieldPoints += maxShieldPoints / 4;
+        shieldPoints = Mathf.Min(shieldPoints, maxShieldPoints);
+    }
+
     public void TakeUltimateDamage()
     {
         healthPoints = 0;
+        shieldPoints = 0;
+
+        ControlPanelCanvasScript CPCS = FindObjectOfType<ControlPanelCanvasScript>();
+        CPCS.UpdateHealth(healthPoints);
+        CPCS.UpdateShield(shieldPoints);
+
         invulnerableAfterDamage = true;
         deathDel();
     }
