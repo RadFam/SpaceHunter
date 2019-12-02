@@ -6,8 +6,16 @@ public class SpaceShipControl : MonoBehaviour {
 
     public GameEvent deathEvent;
 
+    public GameObject shipObject;
+    public ParticleSystem deathExplode;
+    public GameObject playerCamera;
+
     private ControlPanelCanvasScript CPCS;
     private CommonSceneParams CSP;
+
+    private double cameraShipDist;
+    private double cameraShipDistBound = 60.0f;
+    private Vector3 cameraMoveAlong;
     
     Damagable myDamagable;
 
@@ -24,6 +32,11 @@ public class SpaceShipControl : MonoBehaviour {
         myDamagable.currentHealth = CSP.pIH;
         myDamagable.currentShield = CSP.pIS;
         myDamagable.myObject = gameObject;
+
+        playerCamera.transform.localPosition = new Vector3(0.0f, 5.0f, -6.0f);
+        cameraShipDist = Vector3.Distance(playerCamera.transform.localPosition, shipObject.transform.localPosition);
+        cameraMoveAlong = new Vector3(0.0f, 5.0f, -15.0f);
+        cameraMoveAlong.Normalize();
 	}
 	
 	// Update is called once per frame
@@ -37,6 +50,11 @@ public class SpaceShipControl : MonoBehaviour {
         deathEvent.Raise();
 
         // Play explode animation
+        shipObject.SetActive(false);
+        gameObject.GetComponent<SpaceShipMove>().isDead = true;
+        gameObject.GetComponent<SpaceShipShoot>().isDead = true;
+        StartCoroutine(CameraRebound());
+        deathExplode.Play();
 
         // Start final titers, go to menu scene
     }
@@ -45,5 +63,16 @@ public class SpaceShipControl : MonoBehaviour {
     {
         CPCS.UpdateHealth(v1);
         CPCS.UpdateShield(v2);
+    }
+
+    IEnumerator CameraRebound()
+    {
+        while (cameraShipDist <= cameraShipDistBound)
+        {
+            playerCamera.transform.Translate(cameraMoveAlong * 3f, Space.Self);
+
+            cameraShipDist = Vector3.Distance(playerCamera.transform.localPosition, shipObject.transform.localPosition);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }

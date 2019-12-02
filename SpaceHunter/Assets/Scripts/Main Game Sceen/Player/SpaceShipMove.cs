@@ -18,6 +18,7 @@ public class SpaceShipMove : MonoBehaviour {
  
     private float speed = 15.0f;
     public Rigidbody rb;
+    public bool isDead = false;
 
     private bool mooveU = false;
     private bool mooveUR = false;
@@ -34,6 +35,7 @@ public class SpaceShipMove : MonoBehaviour {
 	void Start () 
     {
         //timerShot = deltaTimeShot;
+        isDead = false;
         initSelfRotate = shipObject.transform.localRotation;
         rb.velocity = rb.transform.forward * speed;
         //StartCoroutine(CorrectorPlayerOrient());
@@ -42,151 +44,163 @@ public class SpaceShipMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {    
-        // События от клавиатуры
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (!isDead)
         {
-            if (!mooveUR)
+            // События от клавиатуры
+            if (Input.GetKey(KeyCode.UpArrow))
             {
-                ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.right, -20.0f * Time.deltaTime); // was -0.5f
-                if (!mooveU)
-                {
-                    //StopCoroutine(UpsideNormalisationCoroutine());
-                    mooveU = true;
-                    //StartCoroutine(UpsideCoroutine());
-                }
-            }
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            if (!mooveU)
-            {
-                ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.right, 20.0f * Time.deltaTime); // was 0.5f
                 if (!mooveUR)
                 {
-                    //StopCoroutine(UpsideNormalisationCoroutine());
-                    mooveUR = true;
-                    //StartCoroutine(UpsideRCoroutine()); 
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.right, -20.0f * Time.deltaTime); // was -0.5f
+                    if (!mooveU)
+                    {
+                        //StopCoroutine(UpsideNormalisationCoroutine());
+                        mooveU = true;
+                        //StartCoroutine(UpsideCoroutine());
+                    }
                 }
             }
-        }
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            mooveU = false;
-            //StopCoroutine(UpsideNormalisationCoroutine());
-            //StopCoroutine(UpsideCoroutine());
-            //StartCoroutine(UpsideNormalisationCoroutine());
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            mooveUR = false;
-            //StopCoroutine(UpsideNormalisationCoroutine());
-            //StopCoroutine(UpsideRCoroutine());
-            //StartCoroutine(UpsideNormalisationCoroutine());
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            if (!mooveLR)
+            if (Input.GetKey(KeyCode.DownArrow))
             {
-                ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, -20.0f * Time.deltaTime); // was -0.5f
-                if (!mooveL)
+                if (!mooveU)
                 {
-                    //StopCoroutine(LeftsideNormalisationCoroutine());
-                    mooveL = true;
-                    //StartCoroutine(LeftsideCoroutine());
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.right, 20.0f * Time.deltaTime); // was 0.5f
+                    if (!mooveUR)
+                    {
+                        //StopCoroutine(UpsideNormalisationCoroutine());
+                        mooveUR = true;
+                        //StartCoroutine(UpsideRCoroutine()); 
+                    }
                 }
             }
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (!mooveL)
+            if (Input.GetKeyUp(KeyCode.UpArrow))
             {
-                ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, 20.0f * Time.deltaTime); // was 0.5f
+                mooveU = false;
+                //StopCoroutine(UpsideNormalisationCoroutine());
+                //StopCoroutine(UpsideCoroutine());
+                //StartCoroutine(UpsideNormalisationCoroutine());
+            }
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                mooveUR = false;
+                //StopCoroutine(UpsideNormalisationCoroutine());
+                //StopCoroutine(UpsideRCoroutine());
+                //StartCoroutine(UpsideNormalisationCoroutine());
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
                 if (!mooveLR)
                 {
-                    //StopCoroutine(LeftsideNormalisationCoroutine());
-                    mooveLR = true;
-                    //StartCoroutine(LeftsideRCoroutine());
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, -20.0f * Time.deltaTime); // was -0.5f
+                    if (!mooveL)
+                    {
+                        //StopCoroutine(LeftsideNormalisationCoroutine());
+                        mooveL = true;
+                        //StartCoroutine(LeftsideCoroutine());
+                    }
                 }
             }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                if (!mooveL)
+                {
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, 20.0f * Time.deltaTime); // was 0.5f
+                    if (!mooveLR)
+                    {
+                        //StopCoroutine(LeftsideNormalisationCoroutine());
+                        mooveLR = true;
+                        //StartCoroutine(LeftsideRCoroutine());
+                    }
+                }
+            }
+            if (Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                mooveL = false;
+                //StopCoroutine(LeftsideNormalisationCoroutine());
+                //StopCoroutine(LeftsideCoroutine());
+                //StartCoroutine(LeftsideNormalisationCoroutine());
+            }
+            if (Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                mooveLR = false;
+                //StopCoroutine(LeftsideNormalisationCoroutine());
+                //StopCoroutine(LeftsideRCoroutine());
+                //StartCoroutine(LeftsideNormalisationCoroutine());
+            }
+
+            // Corrector
+            if (specTime >= 0.01f)
+            {
+                specTime = 0.0f;
+                // down self-rotation
+                if (mooveUR && !mooveU && (counterUp > -5))
+                {
+                    shipObject.transform.Rotate(-1.6f, 0.0f, 0.0f, Space.Self);
+                    counterUp--;
+                }
+
+                // up self-rotation
+                if (mooveU && !mooveUR && (counterUp < 5))
+                {
+                    shipObject.transform.Rotate(1.6f, 0.0f, 0.0f, Space.Self);
+                    counterUp++;
+                }
+
+                // left self-rotation
+                if (mooveL && !mooveLR && (counterLeft > -5))
+                {
+                    shipObject.transform.Rotate(0.0f, -1.6f, 0.0f, Space.Self);
+                    counterLeft--;
+                }
+
+                // right self-rotation
+                if (mooveLR && !mooveL && (counterLeft < 5))
+                {
+                    shipObject.transform.Rotate(0.0f, 1.6f, 0.0f, Space.Self);
+                    counterLeft++;
+                }
+
+                // normalize up/down orientation
+                if (!mooveU && !mooveUR && (counterUp != 0))
+                {
+                    //Debug.Log("counterUp_before: " + counterUp.ToString());
+                    int sign = counterUp / Mathf.Abs(counterUp);
+                    shipObject.transform.Rotate(sign * (-1.6f), 0.0f, 0.0f, Space.Self);
+                    counterUp = counterUp - sign;
+                    //Debug.Log("counterUp_after: " + counterUp.ToString());
+                }
+
+                // normalize left/rigth orientation
+                if (!mooveL && !mooveLR && (counterLeft != 0))
+                {
+                    //Debug.Log("counterLeft_before: " + counterLeft.ToString());
+                    int sign = counterLeft / Mathf.Abs(counterLeft);
+                    shipObject.transform.Rotate(0.0f, sign * (-1.6f), 0.0f, Space.Self);
+                    counterLeft = counterLeft - sign;
+                    //Debug.Log("counterLeft_after: " + counterLeft.ToString());
+                }
+
+                if (!mooveL && !mooveLR && !mooveU && !mooveUR && (counterLeft == 0) && (counterUp == 0))
+                {
+                    shipObject.transform.localRotation = initSelfRotate;
+                }
+            }
+
+            specTime += Time.deltaTime;
+
+            rb.velocity = rb.transform.forward * speed;
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (isDead && (Mathf.Abs(speed) >= 0.25f))
         {
-            mooveL = false;
-            //StopCoroutine(LeftsideNormalisationCoroutine());
-            //StopCoroutine(LeftsideCoroutine());
-            //StartCoroutine(LeftsideNormalisationCoroutine());
+            rb.velocity = rb.transform.forward * speed;
+            speed -= 0.25f;
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (isDead && (Mathf.Abs(speed) < 0.25f))
         {
-            mooveLR = false;
-            //StopCoroutine(LeftsideNormalisationCoroutine());
-            //StopCoroutine(LeftsideRCoroutine());
-            //StartCoroutine(LeftsideNormalisationCoroutine());
+            rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            speed = 0.0f;
         }
-
-        // Corrector
-        if (specTime >= 0.01f)
-        {
-            specTime = 0.0f;
-            // down self-rotation
-            if (mooveUR && !mooveU && (counterUp > -5))
-            {
-                shipObject.transform.Rotate(-1.6f, 0.0f, 0.0f, Space.Self);
-                counterUp--;
-            }
-
-            // up self-rotation
-            if (mooveU && !mooveUR && (counterUp < 5))
-            {
-                shipObject.transform.Rotate(1.6f, 0.0f, 0.0f, Space.Self);
-                counterUp++;
-            }
-
-            // left self-rotation
-            if (mooveL && !mooveLR && (counterLeft > -5))
-            {
-                shipObject.transform.Rotate(0.0f, -1.6f, 0.0f, Space.Self);
-                counterLeft--;
-            }
-
-            // right self-rotation
-            if (mooveLR && !mooveL && (counterLeft < 5))
-            {
-                shipObject.transform.Rotate(0.0f, 1.6f, 0.0f, Space.Self);
-                counterLeft++;
-            }
-
-            // normalize up/down orientation
-            if (!mooveU && !mooveUR && (counterUp != 0))
-            {
-                //Debug.Log("counterUp_before: " + counterUp.ToString());
-                int sign = counterUp / Mathf.Abs(counterUp);
-                shipObject.transform.Rotate(sign * (-1.6f), 0.0f, 0.0f, Space.Self);
-                counterUp = counterUp - sign;
-                //Debug.Log("counterUp_after: " + counterUp.ToString());
-            }
-
-            // normalize left/rigth orientation
-            if (!mooveL && !mooveLR && (counterLeft != 0))
-            {
-                //Debug.Log("counterLeft_before: " + counterLeft.ToString());
-                int sign = counterLeft / Mathf.Abs(counterLeft);
-                shipObject.transform.Rotate(0.0f, sign * (-1.6f), 0.0f, Space.Self);
-                counterLeft = counterLeft - sign;
-                //Debug.Log("counterLeft_after: " + counterLeft.ToString());
-            }
-
-            if (!mooveL && !mooveLR && !mooveU && !mooveUR && (counterLeft == 0) && (counterUp == 0))
-            {
-                shipObject.transform.localRotation = initSelfRotate;
-            }
-        }
-
-        specTime += Time.deltaTime;
-
-        rb.velocity = rb.transform.forward * speed;
-        
 	}
 
     public IEnumerator UpsideCoroutine()
