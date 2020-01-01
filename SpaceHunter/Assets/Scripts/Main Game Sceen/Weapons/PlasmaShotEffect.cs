@@ -50,7 +50,7 @@ public class PlasmaShotEffect : MonoBehaviour {
                 if (hit.collider.tag == "Planet")
                 {
                     // Вызовем здесь для примера эффект взрыва плазменного заряда о поверхность
-                    myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
+                    myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>()); // Тут какая-то ошибка вылетает, скорее всего не указана ссылка на объект взаимодействия
                     PS.PlayEffect(hit.point);
                     EndScript();
                 }
