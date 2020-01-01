@@ -5,8 +5,8 @@ using UnityEngine;
 public class ChasingScript : FSMGlobal<EnemyShipAI>
 {
 
-    private float obstacleRebootTime = 0.5f;
-    private float attackRebootTime = 0.05f;
+    private float obstacleRebootTime = 0.5f; // время проверки, нет ли препятсвий на пути преследования
+    private float attackRebootTime = 0.05f; // время проверки, нельзя ли перейти в состояние атаки
     private float spendTime = 0.0f;
     private float spendTime_2 = 0.0f;
 
@@ -20,17 +20,20 @@ public class ChasingScript : FSMGlobal<EnemyShipAI>
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
+        // Из базового класса вызывается функция, определяющая основное поведение в состоянии преследования
         m_MonoBehaviour.ChasingSpace();
 
+        // Проверка раз в obstacleRebootTime секнуд, нет ли препятствий
         if (spendTime >= obstacleRebootTime)
         {
             spendTime = 0.0f;
-            if (m_MonoBehaviour.CheckForObstacleHunt())
+            if (m_MonoBehaviour.CheckForObstacleHunt()) // Если препятствие есть - забываем цель
             {
                 m_MonoBehaviour.ForgetTarget();
             }
         }
 
+        // Проверка раз в attackRebootTime секунд, не перейти ли в состояние атаки
         if (spendTime_2 >= attackRebootTime)
         {
             spendTime_2 = 0.0f;

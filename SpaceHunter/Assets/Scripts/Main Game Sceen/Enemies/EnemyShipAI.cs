@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class EnemyShipAI : MonoBehaviour {
 
-    public Animator anim;
-    public List<Transform> waypoints;
-    public List<Vector3> waypointsCoord;
+    public Animator anim; // Ссылка на объект аниматор
+    public List<Transform> waypoints; // Список точек по которым движется (патрулирует) вражеский корабль
+    public List<Vector3> waypointsCoord; // Список координат точек по которым движется вражеский корабль
 
-    public SpaceShipMove playerObj;
-    public EnemyShipBattleAI enemyBattleAI;
-    public LayerMask obstacleMask;
-    public LayerMask enemyMask;
-    public LayerMask playerMask;
+    public SpaceShipMove playerObj; // Ссылка на корабль игрока
+    public EnemyShipBattleAI enemyBattleAI; // Ссылка на скрипт который в случае стрельбы генерирует объкты сгустков плазмы
+    public LayerMask obstacleMask; // Маска объектов препятствий в пространстве
+    public LayerMask enemyMask; // Маска вражеских объектов
+    public LayerMask playerMask; // Маска объекта игрока
 
-    private RaycastHit rch;
+    private RaycastHit rch; 
 
     protected float sightRange = 100.0f;
     protected float sightAngle = 150.0f;
@@ -24,23 +24,24 @@ public class EnemyShipAI : MonoBehaviour {
     protected float rotationSpeed = 1.5f;
     protected float takeNextWaypointDist = 5.0f;
 
-    private float timerOfAnalyse = 0.2f;
+    private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
     private float timer = 0.0f;
 
     private float distanceToPlayer = 0.0f;
     private float angleToPlayer = 0.0f;
 
-    private Rigidbody enemyRB;
-    private Vector3 wayVector;
-    private Vector3 currWayPoint;
-    public int currWayIndex;
-    public int addedWayIndex;
+    private Rigidbody enemyRB; // Объект "твердого физического тела" для вражеского корабля
+    private Vector3 wayVector; // Вектор направления куда надо двигаться
+    private Vector3 currWayPoint; // Координата текущей точки куда надо лететь
+    public int currWayIndex; // Индекс в списке координат текущей точки куда надо двигаться
+    public int addedWayIndex; // Индекс добавленной координаты движения (для огибания препятствий)
     private float nextWayPointDist;
     public int increment;
 
-    private Damagable myHealth;
+    private Damagable myHealth; // Скрипт который отвечает за повреждения 
 
-    protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
+    // Хэш-коды названия состояний в которые переходит вражеский кораблик
+    protected readonly int m_HashWandering = Animator.StringToHash("Wandering"); 
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
     protected readonly int m_HashAttacking = Animator.StringToHash("Attacking");
     protected readonly int m_HashTargetLost = Animator.StringToHash("TargetLost");
@@ -73,8 +74,10 @@ public class EnemyShipAI : MonoBehaviour {
         wayVector = currWayPoint - gameObject.transform.position;
     }
 
+    // Функция вызывается каждый кадр
     void FixedUpdate()
     {
+        // Каджые timerOfAnalyse мы рассчитываем расстояния и угол до корабля игрока
         if (timer >= timerOfAnalyse)
         { 
             timer = 0.0f;
@@ -84,12 +87,15 @@ public class EnemyShipAI : MonoBehaviour {
             angleToPlayer = Vector3.Angle(gameObject.transform.forward, playerObj.ctrlObject.transform.position - gameObject.transform.position);
         }
 
+        // Совершаем поворот к тому направлению, куда нам надо лететь. Поворот осуществляется на rotationSpeed * Time.deltaTime градусов
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(wayVector), rotationSpeed * Time.deltaTime);
+        // Вычисляем вектр скорости движения
         enemyRB.velocity = enemyRB.transform.forward * cruisingSpeed;
 
-        timer += Time.deltaTime;
+        timer += Time.deltaTime; // Time.deltaTime - сколько времени прошло с момента последнего вызова функции FixedUpdate()
     }
 
+    // Вызывается в случае смерти вражеского кораблика
     public void OnDeath()
     { 
         // Останавливаем FSM
@@ -102,25 +108,30 @@ public class EnemyShipAI : MonoBehaviour {
     }
 
     // Добавим методы управления (блуждание, маневрирование, преследование, атака, уход от встречной атаки)
+    
+    // Проверка, есть ли впереди препятствие
     bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)
     {
         return Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rch, sRange, mask);
     }
 
+    // .......Проверка, нет ли препятсвия между нами и игроком
     public bool CheckForObstacleHunt()
     {
         return Physics.Raycast(gameObject.transform.position, playerObj.ctrlObject.transform.position - gameObject.transform.position, out rch, distanceToPlayer, obstacleMask);
     }
 
+    // Функция, которая проверяет нет ли на пути препятсвий, когда вражеский корабль находится в состоянии Wandering
     public bool CheckForWanderingObstacle()
     {
         bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
 
         if (ans) // назначаем курс отклонения
         {
-            Vector3 nextPoint = rch.transform.GetComponent<ObstacleBehaviour>().GetLeavePoint(gameObject.transform.position);
+            // из луча rch получаем указатель на препятствие (планету) у которой через метод GetLeavePoint получаем координату точки куда нужно лететь, чтобы отклониться от столкновения
+            Vector3 nextPoint = rch.transform.GetComponent<ObstacleBehaviour>().GetLeavePoint(gameObject.transform.position); 
 
-            // Помещаем новую точку в очередь
+            // Помещаем новую точку в очередь, делаем ее текущей точкой маршрута, куда надо лететь
             addedWayIndex = currWayIndex;
             waypointsCoord.Insert(addedWayIndex, nextPoint);
             currWayIndex = addedWayIndex;
@@ -130,16 +141,21 @@ public class EnemyShipAI : MonoBehaviour {
         return ans;
     }
 
+    // "Забываем" цель преследования - прекращаем стрелять, переходим в состояние Wandering
     public void ForgetTarget()
     {
+        // Принудительно переводим FSM вражеского корабля в состояние Wandering
         anim.SetTrigger(m_HashWandering);
         enemyBattleAI.Makeshoot(false);
     }
 
+    // Функия вызываемая из состояния Wandering
     public void PatrollingSpace()
     {
+        // Вычисляет вектор направления движения к очеденой точке назначения
         wayVector = currWayPoint - gameObject.transform.position;
 
+        // Считает расстояние до точки назначения
         nextWayPointDist = Vector3.Distance(gameObject.transform.position, currWayPoint);
         if (nextWayPointDist <= takeNextWaypointDist)
         {
@@ -158,6 +174,7 @@ public class EnemyShipAI : MonoBehaviour {
 
             }
 
+            // Условие, если достигли последнюю точку из списка и начинаем двигаться в обратон напрвлении
             if (currWayIndex == waypointsCoord.Count || currWayIndex == -1)
             {
                 increment = increment * (-1);
@@ -168,16 +185,19 @@ public class EnemyShipAI : MonoBehaviour {
         }
     }
 
+    // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
     public void ChasingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
+    // Расчет вектора направления движения к игроку в случае нахождения в состоянии Attacking (атаки)
     public void AttackingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
+    // Проверяет можем ли мы перейти в состояние Chasing
     public void ScanForChase()
     {
         if ((distanceToPlayer <= sightRange) && (angleToPlayer <= sightAngle))
@@ -190,6 +210,7 @@ public class EnemyShipAI : MonoBehaviour {
         }
     }
 
+    // Проверяет можем ли мы перейти в состояние Attacking
     public void ScanForAttack()
     {
         if ((distanceToPlayer <= attackRange) && (angleToPlayer <= attackAngle))
@@ -208,6 +229,7 @@ public class EnemyShipAI : MonoBehaviour {
         }
     }
 
+    // Проверяем, можем ли мы продолжать атаковать (в противном случае, мы переходим  всостояние преследования)
     public void ScanForFurtherAttack()
     {
         if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange) && (angleToPlayer > attackAngle) && (angleToPlayer <= sightAngle))
@@ -222,6 +244,7 @@ public class EnemyShipAI : MonoBehaviour {
         }
     }
 
+    // Если игрок уничтожен, то "теряем цель"
     public void OnMainPlayerDefeat()
     {
         ForgetTarget();

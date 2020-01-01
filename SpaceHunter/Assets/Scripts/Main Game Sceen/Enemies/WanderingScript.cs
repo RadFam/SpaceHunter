@@ -19,8 +19,8 @@ public class WanderingScript : FSMGlobal<EnemyShipAI>
     */
 
 
-    private float obstacleRebootTime = 0.5f;
-    private float chasingRebootTime = 0.05f;
+    private float obstacleRebootTime = 0.5f; // через какой промежуток времени мы делаем проверку, есть ли игрок, чтобы начать его преследовать
+    private float chasingRebootTime = 0.05f; // через какой промежуток времени мы делаем проверку, нет ли перед нами препятствий
     private float spendTime = 0.0f;
     private float spendTime_2 = 0.0f;
 
@@ -52,14 +52,17 @@ public class WanderingScript : FSMGlobal<EnemyShipAI>
 	//OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
+        // В родительсвом классе вызываем функцию PatrollingSpace, которая определяет наше движение по точкам маршрута
         m_MonoBehaviour.PatrollingSpace();
 
+        // Раз в obstacleRebootTime проверяем в функции CheckForWanderingObstacle родительского класса, нет ли перед нами препятствий
         if (spendTime >= obstacleRebootTime)
         {
             spendTime = 0.0f;
             m_MonoBehaviour.CheckForWanderingObstacle();
         }
 
+        // Раз в chasingRebootTime проверяем в функции ScanForChase родительского класса, можем ли мы перейти в состояние преследования корабля игрока
         if (spendTime_2 >= chasingRebootTime)
         {
             spendTime_2 = 0.0f;

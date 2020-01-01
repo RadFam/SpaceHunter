@@ -11,8 +11,8 @@ public class AttackingScript : FSMGlobal<EnemyShipAI>
     private PlasmaShot rightPlasma;
     */
 
-    private float obstacleRebootTime = 0.5f;
-    private float continueAttackRebootTime = 0.2f;
+    private float obstacleRebootTime = 0.5f; // Время проверки, нет ли препятствия по пути движения
+    private float continueAttackRebootTime = 0.2f; // Время проверки, можем ли мы находиться в состоянии атаки, или нам нужно перейти в другое состояние
     private float spendTime = 0.0f;
     private float spendTime_2 = 0.0f;
 
@@ -30,18 +30,20 @@ public class AttackingScript : FSMGlobal<EnemyShipAI>
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
-
+        // Базовый класс в функции AttackingSpace определяет наше основное поведение в состоянии атаки
         m_MonoBehaviour.AttackingSpace();
 
+        // Запрос на то, нет ли препятствий (раз в obstacleRebootTime секнуд)
         if (spendTime >= obstacleRebootTime)
         {
             spendTime = 0.0f;
-            if (m_MonoBehaviour.CheckForObstacleHunt())
+            if (m_MonoBehaviour.CheckForObstacleHunt()) // если есть препятствие, то цель потеряна
             {
                 m_MonoBehaviour.ForgetTarget();
             }
         }
 
+        // Проверяем раз в continueAttackRebootTime можем ли мы продолжать находиться в состоянии атаки
         if (spendTime_2 >= continueAttackRebootTime)
         {
             spendTime_2 = 0.0f;

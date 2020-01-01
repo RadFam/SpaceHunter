@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Цель этого скрипта - в случае стрельбы вызывать плазменные снаряды из пула объектов
+
 public class EnemyShipBattleAI : MonoBehaviour {
 
     public Transform leftGun;
