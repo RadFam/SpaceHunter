@@ -33,9 +33,9 @@ public class SpaceShipControl : MonoBehaviour {
         myDamagable.currentShield = CSP.pIS;
         myDamagable.myObject = gameObject;
 
-        playerCamera.transform.localPosition = new Vector3(0.0f, 5.0f, -6.0f);
+        playerCamera.transform.localPosition = new Vector3(0.0f, 12.0f, -11.0f);
         cameraShipDist = Vector3.Distance(playerCamera.transform.localPosition, shipObject.transform.localPosition);
-        cameraMoveAlong = new Vector3(0.0f, 5.0f, -15.0f);
+        cameraMoveAlong = new Vector3(0.0f, 12.0f, -36.0f);
         cameraMoveAlong.Normalize();
 	}
 	

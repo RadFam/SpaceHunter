@@ -19,6 +19,8 @@ public class Damagable : MonoBehaviour {
     public PlayerUpdateDelegate playerUpDel;
     public delegate void PlanetChangeHealth(float val);
     public PlanetChangeHealth planetChHlth;
+    public delegate void EnemyChangeHealth(float val);
+    public PlanetChangeHealth enemyChHlth;
 
     public float currentHealth
     {
@@ -72,6 +74,12 @@ public class Damagable : MonoBehaviour {
             }
 
             //Debug.Log("My Current health points are: " + healthPoints.ToString());
+            if (healthPoints <= 0.0f)
+            {
+                invulnerableAfterDamage = true;
+                // Запускаем процедуру гибели объекта
+                deathDel();
+            }
 
             if (myObject.tag == "Player")
             {
@@ -86,11 +94,9 @@ public class Damagable : MonoBehaviour {
                 planetChHlth(healthPoints);
             }
 
-            if (healthPoints <= 0.0f)
+            if (myObject.tag == "Enemy")
             {
-                invulnerableAfterDamage = true;
-                // Запускаем процедуру гибели объекта
-                deathDel();
+                enemyChHlth(healthPoints);
             }
         }
     }

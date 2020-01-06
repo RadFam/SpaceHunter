@@ -17,6 +17,7 @@ public class SpaceShipMove : MonoBehaviour {
     */
  
     private float speed = 15.0f;
+    private float rotspeed = 40.0f;
     public Rigidbody rb;
     public bool isDead = false;
 
@@ -92,7 +93,7 @@ public class SpaceShipMove : MonoBehaviour {
             {
                 if (!mooveLR)
                 {
-                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, -20.0f * Time.deltaTime); // was -0.5f
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, -1.0f * rotspeed * Time.deltaTime); // was -0.5f
                     if (!mooveL)
                     {
                         //StopCoroutine(LeftsideNormalisationCoroutine());
@@ -105,7 +106,7 @@ public class SpaceShipMove : MonoBehaviour {
             {
                 if (!mooveL)
                 {
-                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, 20.0f * Time.deltaTime); // was 0.5f
+                    ctrlObject.transform.RotateAround(ctrlObject.transform.position, ctrlObject.transform.up, rotspeed * Time.deltaTime); // was 0.5f
                     if (!mooveLR)
                     {
                         //StopCoroutine(LeftsideNormalisationCoroutine());
