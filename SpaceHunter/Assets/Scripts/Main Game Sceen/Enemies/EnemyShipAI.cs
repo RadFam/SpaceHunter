@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShipAI : MonoBehaviour {
+// Первый тип искусственного интеллекта, самый простой
+public class EnemyShipAI : EnemyShipAI_Base
+{
 
+    /*
     public Animator anim; // Ссылка на объект аниматор
     public List<Transform> waypoints; // Список точек по которым движется (патрулирует) вражеский корабль
     public List<Vector3> waypointsCoord; // Список координат точек по которым движется вражеский корабль
@@ -14,7 +17,8 @@ public class EnemyShipAI : MonoBehaviour {
     public LayerMask enemyMask; // Маска вражеских объектов
     public LayerMask playerMask; // Маска объекта игрока
 
-    private RaycastHit rch; 
+    private RaycastHit rch;
+    */
 
     protected float sightRange = 100.0f;
     protected float sightAngle = 150.0f;
@@ -30,6 +34,7 @@ public class EnemyShipAI : MonoBehaviour {
     private float distanceToPlayer = 0.0f;
     private float angleToPlayer = 0.0f;
 
+    /*
     private Rigidbody enemyRB; // Объект "твердого физического тела" для вражеского корабля
     private Vector3 wayVector; // Вектор направления куда надо двигаться
     private Vector3 currWayPoint; // Координата текущей точки куда надо лететь
@@ -42,17 +47,18 @@ public class EnemyShipAI : MonoBehaviour {
     private Damagable myHealth; // Скрипт который отвечает за повреждения
     private bool isUnderAttack;
     public bool IsUnderAttack { get { return isUnderAttack; } set { isUnderAttack = value; } }
+    */
 
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering"); 
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
     protected readonly int m_HashAttacking = Animator.StringToHash("Attacking");
-    protected readonly int m_HashRunaway = Animator.StringToHash("Runaway");
     protected readonly int m_HashTargetLost = Animator.StringToHash("TargetLost");
 
     // Use this for initialization
     void Start()
     {
+        /*
         anim = GetComponent<Animator>();
         playerObj = FindObjectOfType<SpaceShipMove>();
         enemyRB = GetComponent<Rigidbody>();
@@ -62,7 +68,10 @@ public class EnemyShipAI : MonoBehaviour {
         myHealth = GetComponent<Damagable>();
         myHealth.enemyChHlth = ShipWasAttacked;
         myHealth.deathDel = OnDeath;
+        */
+        base.StartBegin();
 
+        /*
         waypointsCoord = new List<Vector3>();
         foreach (Transform tr in waypoints)
         {
@@ -74,6 +83,7 @@ public class EnemyShipAI : MonoBehaviour {
         addedWayIndex = -1;
         increment = 1;
         isUnderAttack = false;
+        */
 
         FSMGlobal<EnemyShipAI>.Initialise(anim, this);
 
@@ -99,18 +109,6 @@ public class EnemyShipAI : MonoBehaviour {
         enemyRB.velocity = enemyRB.transform.forward * cruisingSpeed;
 
         timer += Time.deltaTime; // Time.deltaTime - сколько времени прошло с момента последнего вызова функции FixedUpdate()
-    }
-
-    // Вызывается в случае смерти вражеского кораблика
-    public void OnDeath()
-    { 
-        // Останавливаем FSM
-        anim.enabled = false;
-
-        // Высвобождаем все задействованные снаряды (если это надо)
-
-        // Уничтожаем объект
-        Destroy(gameObject);
     }
 
     // Добавим методы управления (блуждание, маневрирование, преследование, атака, уход от встречной атаки)
@@ -248,67 +246,6 @@ public class EnemyShipAI : MonoBehaviour {
         {
             ForgetTarget();
         }
-    }
-
-    public void ShipWasAttacked(float val)
-    {
-        if (!isUnderAttack)
-        {
-            isUnderAttack = true;
-
-            // Надо выбрать точку, куда корабль будет убегать
-            float dice = Random.Range(0.0f, 1.0f);
-            float angleX, angleY;
-            if (dice < 0.5f)
-            {
-                angleY = Random.Range(25.0f, 50.0f);
-            }else
-            {
-                angleY = Random.Range(-50.0f, -25.0f);
-            }
-
-            dice = Random.Range(0.0f, 1.0f);
-            if (dice < 0.5f)
-            {
-                angleX = Random.Range(25.0f, 50.0f);
-            }
-            else
-            {
-                angleX = Random.Range(-50.0f, -25.0f);
-            }
-
-            float distRand = Random.Range(50.0f, 75.0f);
-            Vector3 subVect = gameObject.transform.forward.normalized;
-            Quaternion q1 = Quaternion.AngleAxis(angleX, gameObject.transform.up);
-            Quaternion q2 = Quaternion.AngleAxis(angleY, gameObject.transform.right);
-            currRunawayPoint = q1 * q2 * subVect * distRand + gameObject.transform.position;
-
-            // Переходим в состояние убегания
-            anim.SetTrigger(m_HashRunaway);
-        }
-    }
-
-    public void RunawayState()
-    {
-        wayVector = currRunawayPoint - gameObject.transform.position;
-        float dist = Vector3.Distance(gameObject.transform.position, currRunawayPoint);
-        if (dist < takeNextWaypointDist)
-        {
-            ScanForWandering();
-        }
-    }
-
-    public void ScanForWandering()
-    {
-        if (!isUnderAttack)
-        {
-            anim.SetTrigger(m_HashWandering);
-        }
-    }
-
-    public bool CheckForRunawayObstacle()
-    {
-        return true;
     }
 
     // Если игрок уничтожен, то "теряем цель"
