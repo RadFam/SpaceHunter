@@ -5,21 +5,6 @@ using UnityEngine;
 // Второй тип искусственного интеллекта, так как в нем уже есть убегание
 public class EnemyShipAI_2 : EnemyShipAI_Base
 {
-
-    /*
-    public Animator anim; // Ссылка на объект аниматор
-    public List<Transform> waypoints; // Список точек по которым движется (патрулирует) вражеский корабль
-    public List<Vector3> waypointsCoord; // Список координат точек по которым движется вражеский корабль
-
-    public SpaceShipMove playerObj; // Ссылка на корабль игрока
-    public EnemyShipBattleAI enemyBattleAI; // Ссылка на скрипт который в случае стрельбы генерирует объкты сгустков плазмы
-    public LayerMask obstacleMask; // Маска объектов препятствий в пространстве
-    public LayerMask enemyMask; // Маска вражеских объектов
-    public LayerMask playerMask; // Маска объекта игрока
-
-    private RaycastHit rch;
-    */
-
     protected float sightRange = 100.0f;
     protected float sightAngle = 150.0f;
     protected float attackRange = 45.0f;
@@ -34,21 +19,6 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     private float distanceToPlayer = 0.0f;
     private float angleToPlayer = 0.0f;
 
-    /*
-    private Rigidbody enemyRB; // Объект "твердого физического тела" для вражеского корабля
-    private Vector3 wayVector; // Вектор направления куда надо двигаться
-    private Vector3 currWayPoint; // Координата текущей точки куда надо лететь
-    private Vector3 currRunawayPoint;
-    public int currWayIndex; // Индекс в списке координат текущей точки куда надо двигаться
-    public int addedWayIndex; // Индекс добавленной координаты движения (для огибания препятствий)
-    private float nextWayPointDist;
-    public int increment;
-
-    private Damagable myHealth; // Скрипт который отвечает за повреждения
-    private bool isUnderAttack;
-    public bool IsUnderAttack { get { return isUnderAttack; } set { isUnderAttack = value; } }
-    */
-
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
@@ -59,34 +29,9 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     // Use this for initialization
     void Start()
     {
-        /*
-        anim = GetComponent<Animator>();
-        playerObj = FindObjectOfType<SpaceShipMove>();
-        enemyRB = GetComponent<Rigidbody>();
-
-        enemyBattleAI = GetComponent<EnemyShipBattleAI>();
-
-        myHealth = GetComponent<Damagable>();
-        myHealth.enemyChHlth = ShipWasAttacked;
-        myHealth.deathDel = OnDeath;
-        */
-        base.Start();
+        base.StartBegin();
 
         myHealth.enemyChHlth = ShipWasAttacked;
-
-        /*
-        waypointsCoord = new List<Vector3>();
-        foreach (Transform tr in waypoints)
-        {
-            waypointsCoord.Add(tr.position);
-        }
-
-        currWayIndex = 0;
-        currWayPoint = waypointsCoord[currWayIndex];
-        addedWayIndex = -1;
-        increment = 1;
-        isUnderAttack = false;
-        */
 
         FSMGlobal<EnemyShipAI_2>.Initialise(anim, this);
 
@@ -318,5 +263,4 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     {
         ForgetTarget();
     }
-}
 }

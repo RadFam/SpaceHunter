@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetSelfSpin : MonoBehaviour {
-
+public class PlanetSelfSpin : MonoBehaviour
+{
+    /*
     private PlanetMoveScript PMS;
 
     private float pAIX;
@@ -31,4 +32,5 @@ public class PlanetSelfSpin : MonoBehaviour {
         transform.RotateAround(gameObject.transform.position, gameObject.transform.up, sRS * Time.deltaTime);
         //Debug.Log(gameObject.transform.up);
 	}
+    */
 }

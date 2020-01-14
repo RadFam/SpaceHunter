@@ -16,7 +16,7 @@ public class SpaceShipMove : MonoBehaviour {
     private float deltaTimeShot = 0.1f;
     */
  
-    private float speed = 15.0f;
+    private float speed = 35.0f;
     private float rotspeed = 40.0f;
     public Rigidbody rb;
     public bool isDead = false;

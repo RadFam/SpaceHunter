@@ -2,72 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlanetMoveScript : MonoBehaviour {
+public class PlanetMoveScript : MonoBehaviour
+{
+    public float exc;
+    public Vector3 spineAngles;
+    public float speedSpine;
+    public float speedOrbital;
+    public GameObject selfPlanet;
 
-    public Vector3 initPosition;
-    
-    public float polarAxisInclinationX;
-    public float polarAxisInclinationZ;
-    public float selfRotationSpeed;
+    private List<Vector3> pointsToWalk;
+    private Vector3 sunPlace;
+    private int currPoint;
+    private int allPointNum = 64;
+    private Vector3 nextPlace;
+    private float distEx = 0.1f;
 
-    public Vector3 systemCenter;
-    public Vector3 equilipticUp;
-    public float bigSemiAxis;
-    public float smallSemiAxis;
-    public float orbitalRevolutionSpeed;
+    private float step;
 
-    public List<Vector3> posToWalk;
-    private float cParam;
-    private int pointCount;
-    private Vector3 pointCoord;
-
-    void Awake()
-    {
-        cParam = Mathf.Sqrt(bigSemiAxis * bigSemiAxis - smallSemiAxis * smallSemiAxis);
-        //Vector3 ellipseCenterVect = Vector3.Normalize(systemCenter - transform.position)*cParam;
-        initPosition = transform.position;
-        Vector3 ellipseCenter = Vector3.Normalize(systemCenter - transform.position) * bigSemiAxis;
-        posToWalk = new List<Vector3>();
-        for (int i = 0; i < 100; ++i)
-        {
-            Vector3 tmp = new Vector3(ellipseCenter.x + smallSemiAxis * Mathf.Sin(i * 2 * 3.14f / 100), ellipseCenter.y, ellipseCenter.z + bigSemiAxis * Mathf.Cos(i * 2 * 3.14f / 100));
-            posToWalk.Add(tmp);
-        }
-
-        pointCount = 1;
-        pointCoord = posToWalk[pointCount];
-    }
-    
     // Use this for initialization
-	void Start () 
+    void Start()
     {
-        //transform.position = initPosition;
-        //transform.eulerAngles = new Vector3(polarAxisInclinationX, 0.0f, polarAxisInclinationZ);
+        pointsToWalk = new List<Vector3>();
 
-        // By default, Sun is in point (0, 0, 0)
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        //transform.RotateAround(transform.position, transform.up, selfRotationSpeed * Time.deltaTime);
+        // Наклоним ось вращения
+        selfPlanet.transform.localEulerAngles = spineAngles;
 
-        // !!!!!!!!!!!!!!!!!!
-        // Commented, while treasure part is making....
-        
-        /*
-        float step = orbitalRevolutionSpeed * Time.deltaTime; // calculate distance to move
-        transform.position = Vector3.MoveTowards(transform.position, pointCoord, step);
+        // Рассчитаем большую и малую полуось
+        sunPlace = new Vector3(0.0f, 0.0f, 0.0f);
+        Vector3 a = gameObject.transform.position - sunPlace;
+        float aL = a.magnitude;
+        float bL = aL * exc;
+        a = a.normalized;
+        Vector3 b = new Vector3(-a.y, a.x, 0.0f);
+        b = b.normalized;
+        Vector3 c = Vector3.Cross(a, b);
+        c = c.normalized;
 
-        if (Vector3.Distance(transform.position, pointCoord) < 1.0f)
+        Vector3 x_tr = new Vector3(a.x, b.x, c.x);
+        Vector3 y_tr = new Vector3(a.y, b.y, c.y);
+        Vector3 z_tr = new Vector3(a.z, b.z, c.z);
+
+        for (int i = 0; i < allPointNum; ++i)
         {
-            pointCount++;
-            if (pointCount >= 100)
-            {
-                pointCount = 0;
-            }
-            pointCoord = posToWalk[pointCount];
+            Vector3 tmp = new Vector3(aL * Mathf.Cos(i * (2 * 3.14f) / 64), bL * Mathf.Sin(i * (2 * 3.14f) / 64), 0.0f);
+            Vector3 pnt = new Vector3(Vector3.Dot(x_tr, tmp), Vector3.Dot(y_tr, tmp), Vector3.Dot(z_tr, tmp));
+            pointsToWalk.Add(pnt);
         }
-        */
-	}
+
+        currPoint = 1;
+        nextPlace = pointsToWalk[currPoint];
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Самовращение вокруг оси
+        selfPlanet.transform.RotateAround(selfPlanet.transform.position, selfPlanet.transform.forward, speedSpine * Time.deltaTime);
+
+        // Движение по орбите
+        step = speedOrbital * Time.deltaTime; // calculate distance to move
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, nextPlace, step);
+        if (Vector3.Distance(gameObject.transform.position, nextPlace) <= distEx)
+        {
+            currPoint++;
+            if (currPoint >= allPointNum)
+            {
+                currPoint = 0;
+            }
+            nextPlace = pointsToWalk[currPoint];
+        }
+    }
 }
