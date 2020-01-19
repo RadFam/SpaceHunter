@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ConstGameCtrl : MonoBehaviour {
 
-    public enum PlanetSurprize { Gold = 0, Health, Shield, Fuel, Niinite, Amberill, Malachite, Mineral_04, Mineral_05, Mineral_06, Mineral_07, Mineral_08, Mineral_09, Mineral_10,
-                                Mineral_11, Mineral_12, Mineral_13, Mineral_14, Mineral_15, Mineral_16, Mineral_17, Mineral_18, Mineral_19, Mineral_20,
-                                Mineral_21, Mineral_22, Mineral_23, Mineral_24, Mineral_25, Mineral_26, Mineral_27, Mineral_28, Mineral_29, Mineral_30,
-                                Mineral_31, Mineral_32, Mineral_33, Mineral_34, Mineral_35, Mineral_36, Mineral_37, Mineral_38, Mineral_39, Mineral_40,
-                                Mineral_41, Mineral_42, Mineral_43, Mineral_44, Mineral_45, Mineral_46, Mineral_47, Mineral_48, Mineral_49, Mineral_50};
+    public enum PlanetSurprize { Gold = 0, Health, Shield, Fuel, Niinite, Amberill, Malachite, Grimadlin, DatinumColcium, Regolit, RedGold, Ktors, TurquoiseDust, Ilumnit,
+                                WhisperStone, Millir, Tulwiat, Turtus, KazurGravium, Tibulum, Ilmenite, BlackKhalit, Sorit, Calcium,
+                                TaoDannik, Smytit, Sandstone, UltramarAdamant, Daogai, Redrebium, Bastianum, Lorvarcor, Latriel, Witchstone,
+                                Melnibonum, Massaracsheet, Zorim, Alvesid, Matrium, YashmitSalt, Asphylit, Miltanium, Kilubus, Sirlic,
+                                Nemesid, Latrimeumstone, Koyperit, Kryptonit, RainbowCorall, Oortenstone, Alexandrit, Ogamit, Coronium, Nebulium};
 
     public static ConstGameCtrl instance = null;
     public PrizeCollection mainPC;
