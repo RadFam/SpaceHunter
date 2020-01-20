@@ -24,10 +24,15 @@ public class EnemyShipAI_Base : MonoBehaviour
     protected Vector3 wayVector; // Вектор направления куда надо двигаться
     protected Vector3 currWayPoint; // Координата текущей точки куда надо лететь
     protected Vector3 currRunawayPoint;
+    protected Vector3 obstacleRunawayPoint;
+    protected bool obstacleRunawayState;
     protected int currWayIndex; // Индекс в списке координат текущей точки куда надо двигаться
     protected int addedWayIndex; // Индекс добавленной координаты движения (для огибания препятствий)
     protected float nextWayPointDist;
     protected int increment;
+
+    protected float distanceToPlayer = 0.0f;
+    protected float angleToPlayer = 0.0f;
 
     protected Damagable myHealth; // Скрипт который отвечает за повреждения
     protected bool isUnderAttack;
@@ -58,6 +63,7 @@ public class EnemyShipAI_Base : MonoBehaviour
         addedWayIndex = -1;
         increment = 1;
         isUnderAttack = false;
+        obstacleRunawayState = false;
     }
 
     public void OnDeath()
@@ -67,5 +73,71 @@ public class EnemyShipAI_Base : MonoBehaviour
 
         // Уничтожаем объект
         Destroy(gameObject);
+    }
+
+    public bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)
+    {
+        return Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rch, sRange, mask);
+    }
+
+    public bool CheckForObstacleHunt()
+    {
+        return Physics.Raycast(gameObject.transform.position, playerObj.ctrlObject.transform.position - gameObject.transform.position, out rch, distanceToPlayer, obstacleMask);
+    }
+
+    public virtual bool CheckForWanderingObstacle()
+    {
+        return true;
+    }
+
+    public virtual void ForgetTarget()
+    {
+    }
+
+    public virtual void PatrollingSpace()
+    {
+    }
+
+    public virtual void ChasingSpace()
+    {
+    }
+
+    public virtual void AttackingSpace()
+    {
+    }
+
+    public virtual void ScanForChase()
+    {
+    }
+
+    public virtual void ScanForAttack()
+    {
+    }
+
+    public virtual void ScanForFurtherAttack()
+    {
+    }
+
+    public virtual void ShipWasAttacked(float val)
+    {
+    }
+
+    public virtual void RunawayState()
+    {
+    }
+
+    public virtual void ScanForWandering()
+    {
+    }
+
+    public virtual bool CheckForRunawayObstacle()
+    {
+        return true;
+    }
+
+    // Если игрок уничтожен, то "теряем цель"
+    public void OnMainPlayerDefeat()
+    {
+        ForgetTarget();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WanderingScript : FSMGlobal<EnemyShipAI>
+public class WanderingScript : FSMGlobal<EnemyShipAI_Base>
 {   
     /*
     public int currWayCoordInd;

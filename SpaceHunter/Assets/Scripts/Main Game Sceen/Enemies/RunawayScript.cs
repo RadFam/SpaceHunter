@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunawayScript : FSMGlobal<EnemyShipAI>
+public class RunawayScript : FSMGlobal<EnemyShipAI_Base>
 {
     private float obstacleRebootTime = 0.5f; // через какой промежуток времени мы делаем проверку, нет ли перед нами препятствий
     private float runawayRebootTime = 0.05f; // через какой промежуток времени мы делаем проверку, можно ли оставаться в состоянии убегания
@@ -25,14 +25,19 @@ public class RunawayScript : FSMGlobal<EnemyShipAI>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
+        m_MonoBehaviour.RunawayState();
+
         if (spendTime >= obstacleRebootTime)
         {
             spendTime = 0.0f;
+            m_MonoBehaviour.CheckForRunawayObstacle();
         }
 
         if (spendTime_2 >= runawayRebootTime)
         {
             spendTime_2 = 0.0f;
+            m_MonoBehaviour.IsUnderAttack = false;
+            m_MonoBehaviour.ScanForWandering();
         }
 
         spendTime += Time.deltaTime;

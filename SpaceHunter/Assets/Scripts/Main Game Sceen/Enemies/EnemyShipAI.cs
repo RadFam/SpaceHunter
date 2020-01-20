@@ -31,8 +31,8 @@ public class EnemyShipAI : EnemyShipAI_Base
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
     private float timer = 0.0f;
 
-    private float distanceToPlayer = 0.0f;
-    private float angleToPlayer = 0.0f;
+    //private float distanceToPlayer = 0.0f;
+    //private float angleToPlayer = 0.0f;
 
     /*
     private Rigidbody enemyRB; // Объект "твердого физического тела" для вражеского корабля
@@ -114,19 +114,23 @@ public class EnemyShipAI : EnemyShipAI_Base
     // Добавим методы управления (блуждание, маневрирование, преследование, атака, уход от встречной атаки)
     
     // Проверка, есть ли впереди препятствие
+    /*
     bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)
     {
         return Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rch, sRange, mask);
     }
+    */
 
     // .......Проверка, нет ли препятсвия между нами и игроком
+    /*
     public bool CheckForObstacleHunt()
     {
         return Physics.Raycast(gameObject.transform.position, playerObj.ctrlObject.transform.position - gameObject.transform.position, out rch, distanceToPlayer, obstacleMask);
     }
+    */
 
     // Функция, которая проверяет нет ли на пути препятсвий, когда вражеский корабль находится в состоянии Wandering
-    public bool CheckForWanderingObstacle()
+    public override bool CheckForWanderingObstacle()
     {
         bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
 
@@ -146,7 +150,7 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // "Забываем" цель преследования - прекращаем стрелять, переходим в состояние Wandering
-    public void ForgetTarget()
+    public override void ForgetTarget()
     {
         // Принудительно переводим FSM вражеского корабля в состояние Wandering
         anim.SetTrigger(m_HashWandering);
@@ -154,7 +158,7 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // Функия вызываемая из состояния Wandering
-    public void PatrollingSpace()
+    public override void PatrollingSpace()
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
         wayVector = currWayPoint - gameObject.transform.position;
@@ -190,19 +194,19 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
-    public void ChasingSpace()
+    public override void ChasingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Attacking (атаки)
-    public void AttackingSpace()
+    public override void AttackingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
     // Проверяет можем ли мы перейти в состояние Chasing
-    public void ScanForChase()
+    public override void ScanForChase()
     {
         if ((distanceToPlayer <= sightRange) && (angleToPlayer <= sightAngle))
         {
@@ -215,7 +219,7 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // Проверяет можем ли мы перейти в состояние Attacking
-    public void ScanForAttack()
+    public override void ScanForAttack()
     {
         if ((distanceToPlayer <= attackRange) && (angleToPlayer <= attackAngle))
         {
@@ -234,7 +238,7 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // Проверяем, можем ли мы продолжать атаковать (в противном случае, мы переходим  всостояние преследования)
-    public void ScanForFurtherAttack()
+    public override void ScanForFurtherAttack()
     {
         if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange) && (angleToPlayer > attackAngle) && (angleToPlayer <= sightAngle))
         {
@@ -249,8 +253,10 @@ public class EnemyShipAI : EnemyShipAI_Base
     }
 
     // Если игрок уничтожен, то "теряем цель"
+    /*
     public void OnMainPlayerDefeat()
     {
         ForgetTarget();
     }
+    */
 }

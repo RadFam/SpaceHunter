@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChasingScript : FSMGlobal<EnemyShipAI>
+public class ChasingScript : FSMGlobal<EnemyShipAI_Base>
 {
 
     private float obstacleRebootTime = 0.5f; // время проверки, нет ли препятсвий на пути преследования

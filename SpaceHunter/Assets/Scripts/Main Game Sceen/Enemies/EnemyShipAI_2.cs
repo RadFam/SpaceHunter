@@ -16,9 +16,6 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
     private float timer = 0.0f;
 
-    private float distanceToPlayer = 0.0f;
-    private float angleToPlayer = 0.0f;
-
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
@@ -62,19 +59,23 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     // Добавим методы управления (блуждание, маневрирование, преследование, атака, уход от встречной атаки)
 
     // Проверка, есть ли впереди препятствие
+    /*
     bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)
     {
         return Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out rch, sRange, mask);
     }
+    */
 
     // .......Проверка, нет ли препятсвия между нами и игроком
+    /*
     public bool CheckForObstacleHunt()
     {
         return Physics.Raycast(gameObject.transform.position, playerObj.ctrlObject.transform.position - gameObject.transform.position, out rch, distanceToPlayer, obstacleMask);
     }
+    */
 
     // Функция, которая проверяет нет ли на пути препятсвий, когда вражеский корабль находится в состоянии Wandering
-    public bool CheckForWanderingObstacle()
+    public override bool CheckForWanderingObstacle()
     {
         bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
 
@@ -94,7 +95,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     }
 
     // "Забываем" цель преследования - прекращаем стрелять, переходим в состояние Wandering
-    public void ForgetTarget()
+    public override void ForgetTarget()
     {
         // Принудительно переводим FSM вражеского корабля в состояние Wandering
         anim.SetTrigger(m_HashWandering);
@@ -102,7 +103,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     }
 
     // Функия вызываемая из состояния Wandering
-    public void PatrollingSpace()
+    public override void PatrollingSpace()
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
         wayVector = currWayPoint - gameObject.transform.position;
@@ -138,19 +139,19 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     }
 
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
-    public void ChasingSpace()
+    public override void ChasingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Attacking (атаки)
-    public void AttackingSpace()
+    public override void AttackingSpace()
     {
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
     // Проверяет можем ли мы перейти в состояние Chasing
-    public void ScanForChase()
+    public override void ScanForChase()
     {
         if ((distanceToPlayer <= sightRange) && (angleToPlayer <= sightAngle))
         {
@@ -163,7 +164,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     }
 
     // Проверяет можем ли мы перейти в состояние Attacking
-    public void ScanForAttack()
+    public override void ScanForAttack()
     {
         if ((distanceToPlayer <= attackRange) && (angleToPlayer <= attackAngle))
         {
@@ -182,7 +183,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     }
 
     // Проверяем, можем ли мы продолжать атаковать (в противном случае, мы переходим  всостояние преследования)
-    public void ScanForFurtherAttack()
+    public override void ScanForFurtherAttack()
     {
         if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange) && (angleToPlayer > attackAngle) && (angleToPlayer <= sightAngle))
         {
@@ -196,7 +197,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
         }
     }
 
-    public void ShipWasAttacked(float val)
+    public override void ShipWasAttacked(float val)
     {
         if (!isUnderAttack)
         {
@@ -235,17 +236,22 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
         }
     }
 
-    public void RunawayState()
+    public override void RunawayState()
     {
         wayVector = currRunawayPoint - gameObject.transform.position;
         float dist = Vector3.Distance(gameObject.transform.position, currRunawayPoint);
         if (dist < takeNextWaypointDist)
         {
+            if (obstacleRunawayState)
+            {
+                currRunawayPoint = obstacleRunawayPoint;
+                obstacleRunawayState = false;
+            }
             ScanForWandering();
         }
     }
 
-    public void ScanForWandering()
+    public override void ScanForWandering()
     {
         if (!isUnderAttack)
         {
@@ -253,14 +259,27 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
         }
     }
 
-    public bool CheckForRunawayObstacle()
+    public override bool CheckForRunawayObstacle()
     {
-        return true;
+        bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
+
+        if (ans)
+        {
+            obstacleRunawayState = true;
+            obstacleRunawayPoint = rch.transform.GetComponent<ObstacleBehaviour>().GetLeavePoint(gameObject.transform.position);
+            Vector3 tmp = currRunawayPoint;
+            currRunawayPoint = obstacleRunawayPoint;
+            obstacleRunawayPoint = tmp;
+        }
+
+        return ans;
     }
 
     // Если игрок уничтожен, то "теряем цель"
+    /*
     public void OnMainPlayerDefeat()
     {
         ForgetTarget();
     }
+    */
 }

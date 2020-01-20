@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackingScript : FSMGlobal<EnemyShipAI>
+public class AttackingScript : FSMGlobal<EnemyShipAI_Base>
 {
     /*
     private float timer;
