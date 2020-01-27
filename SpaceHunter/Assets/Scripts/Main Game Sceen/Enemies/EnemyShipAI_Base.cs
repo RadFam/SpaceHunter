@@ -122,6 +122,10 @@ public class EnemyShipAI_Base : MonoBehaviour
     {
     }
 
+    public virtual void ShipWasNearlyAttacked()
+    {
+    }
+
     public virtual void RunawayState()
     {
     }
