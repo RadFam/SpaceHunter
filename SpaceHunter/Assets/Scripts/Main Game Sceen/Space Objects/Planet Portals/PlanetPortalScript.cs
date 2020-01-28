@@ -11,6 +11,14 @@ public class PlanetPortalScript : MonoBehaviour
     protected int myNum;
     protected bool isPassed;
 
+    public GameObject warp1;
+    public GameObject warp2;
+    public GameObject warp3;
+
+    protected float speedRot1 = -15.0f;
+    protected float speedRot2 = 12.0f;
+    protected float speedRot3 = 25.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,5 +47,10 @@ public class PlanetPortalScript : MonoBehaviour
         }
     }
 
-
+    void Update()
+    {
+        warp1.transform.RotateAround(warp1.transform.position, warp1.transform.forward, speedRot1 * Time.deltaTime);
+        warp2.transform.RotateAround(warp2.transform.position, warp2.transform.forward, speedRot2 * Time.deltaTime);
+        warp3.transform.RotateAround(warp3.transform.position, warp3.transform.forward, speedRot3 * Time.deltaTime);
+    }
 }
