@@ -13,6 +13,8 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
     protected float takeNextWaypointDist = 5.0f;
 
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
+    private float timerOfSpecAnalyse = 5.0f;
+    private float timerSpec = 0.0f;
     private float timer = 0.0f;
 
     protected Vector3 maneuveringPoint;
@@ -34,6 +36,7 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
 
         FSMGlobal<EnemyShipAI_4>.Initialise(anim, this);
 
+        currWayPoint = playerObj.ctrlObject.transform.position;
         wayVector = currWayPoint - gameObject.transform.position;
     }
 
@@ -49,6 +52,11 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
             distanceToPlayer = Vector3.Distance(gameObject.transform.position, playerObj.ctrlObject.transform.position);
             angleToPlayer = Vector3.Angle(gameObject.transform.forward, playerObj.ctrlObject.transform.position - gameObject.transform.position);
         }
+        if (timerSpec >= timerOfSpecAnalyse)
+        {
+            timerSpec = 0.0f;
+            currWayPoint = playerObj.ctrlObject.transform.position;
+        }
 
         // Совершаем поворот к тому направлению, куда нам надо лететь. Поворот осуществляется на rotationSpeed * Time.deltaTime градусов
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(wayVector), rotationSpeed * Time.deltaTime);
@@ -56,6 +64,7 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
         enemyRB.velocity = enemyRB.transform.forward * cruisingSpeed;
 
         timer += Time.deltaTime; // Time.deltaTime - сколько времени прошло с момента последнего вызова функции FixedUpdate()
+        timerSpec += Time.deltaTime;
     }
 
     // Функция, которая проверяет нет ли на пути препятсвий, когда вражеский корабль находится в состоянии Wandering
@@ -91,35 +100,6 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
         wayVector = currWayPoint - gameObject.transform.position;
-
-        // Считает расстояние до точки назначения
-        nextWayPointDist = Vector3.Distance(gameObject.transform.position, currWayPoint);
-        if (nextWayPointDist <= takeNextWaypointDist)
-        {
-            if (addedWayIndex == -1)
-            {
-                currWayIndex += increment;
-            }
-            else  // то есть шли к добавленной точке
-            {
-                waypointsCoord.RemoveAt(addedWayIndex);
-                addedWayIndex = -1;
-                if (increment == -1)
-                {
-                    currWayIndex += increment;
-                }
-
-            }
-
-            // Условие, если достигли последнюю точку из списка и начинаем двигаться в обратон напрвлении
-            if (currWayIndex == waypointsCoord.Count || currWayIndex == -1)
-            {
-                increment = increment * (-1);
-                currWayIndex += increment;
-            }
-
-            currWayPoint = waypointsCoord[currWayIndex];
-        }
     }
 
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
@@ -159,7 +139,7 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
                 enemyBattleAI.Makeshoot(true);
             }
         }
-        if ((distanceToPlayer > sightRange) || (angleToPlayer > sightAngle))
+        if (distanceToPlayer > sightRange)
         {
             //Debug.Log("distanceToPlayer: " + distanceToPlayer.ToString() + "  angleToPlayer: " + angleToPlayer.ToString());
             ForgetTarget();
@@ -169,13 +149,13 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
     // Проверяем, можем ли мы продолжать атаковать (в противном случае, мы переходим  всостояние преследования)
     public override void ScanForFurtherAttack()
     {
-        if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange) && (angleToPlayer > attackAngle) && (angleToPlayer <= sightAngle))
+        if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange))
         {
             enemyBattleAI.Makeshoot(false);
             anim.SetTrigger(m_HashChasing);
         }
 
-        if ((distanceToPlayer > sightRange) || (angleToPlayer > sightAngle))
+        if (distanceToPlayer > sightRange)
         {
             ForgetTarget();
         }
@@ -184,30 +164,64 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
     public override void ShipWasAttacked(float val)
     {
         // На случай, если мы находимся в состоянии wandering
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chasing") || anim.GetCurrentAnimatorStateInfo(0).IsName("Attacking"))
         {
-            CheckForChaseSpecial();
+            CheckForManeuverSpecial();
         }
     }
 
     public override void ShipWasNearlyAttacked()
     {
         // Проверить, есть ли в радиусе досягаемости корабль игрока и потом перейти в погоню за ним
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Chasing") || anim.GetCurrentAnimatorStateInfo(0).IsName("Attacking"))
         {
-            CheckForChaseSpecial();
+            CheckForManeuverSpecial();
         }
     }
 
-    public void CheckForChaseSpecial()
+    public void CheckForManeuverSpecial()
     {
         if (distanceToPlayer <= sightRange)
         {
-            anim.SetTrigger(m_HashManeuvering);
+            if (!isUnderAttack)
+            {
+                isUnderAttack = true;
+
+                // Надо выбрать точку, куда корабль будет убегать
+                float dice = Random.Range(0.0f, 1.0f);
+                float angleX, angleY;
+                if (dice < 0.5f)
+                {
+                    angleY = Random.Range(25.0f, 50.0f);
+                }
+                else
+                {
+                    angleY = Random.Range(-50.0f, -25.0f);
+                }
+
+                dice = Random.Range(0.0f, 1.0f);
+                if (dice < 0.5f)
+                {
+                    angleX = Random.Range(25.0f, 50.0f);
+                }
+                else
+                {
+                    angleX = Random.Range(-50.0f, -25.0f);
+                }
+
+                float distRand = Random.Range(50.0f, 75.0f);
+                Vector3 subVect = gameObject.transform.forward.normalized;
+                Quaternion q1 = Quaternion.AngleAxis(angleX, gameObject.transform.up);
+                Quaternion q2 = Quaternion.AngleAxis(angleY, gameObject.transform.right);
+                currRunawayPoint = q1 * q2 * subVect * distRand + gameObject.transform.position;
+
+                anim.SetTrigger(m_HashManeuvering);
+            }
+            
         }
     }
 
-    public  void ManeuveringState()
+    public void ManeuveringState()
     {
         wayVector = currRunawayPoint - gameObject.transform.position;
         float dist = Vector3.Distance(gameObject.transform.position, currRunawayPoint);
@@ -219,6 +233,38 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
                 maneuveringState = false;
             }
             ScanForWandering();
+        }
+    }
+
+    public bool CheckForManeuverObstacle()
+    {
+        bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
+
+        if (ans)
+        {
+            maneuveringState = true;
+            maneuveringPoint = rch.transform.GetComponent<ObstacleBehaviour>().GetLeavePoint(gameObject.transform.position);
+            Vector3 tmp = currRunawayPoint;
+            currRunawayPoint = maneuveringPoint;
+            maneuveringPoint = tmp;
+        }
+
+        return ans;
+    }
+
+    public void ScanForEndManeuvering()
+    {
+        if (distanceToPlayer > sightRange)
+        {
+            anim.SetTrigger(m_HashWandering);
+        }
+        if (distanceToPlayer <= sightRange)
+        {
+            anim.SetTrigger(m_HashChasing);
+        }
+        if (distanceToPlayer <= attackRange)
+        {
+            anim.SetTrigger(m_HashAttacking);
         }
     }
 }
