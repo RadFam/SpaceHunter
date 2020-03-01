@@ -93,7 +93,7 @@ public class EnemyShipAI : EnemyShipAI_Base
         isUnderAttack = false;
         */
 
-        FSMGlobal<EnemyShipAI>.Initialise(anim, this);
+        FSMGlobal<EnemyShipAI_Base>.Initialise(anim, this);
 
         wayVector = currWayPoint - gameObject.transform.position;
     }

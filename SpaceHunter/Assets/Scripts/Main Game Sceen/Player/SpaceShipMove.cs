@@ -16,7 +16,9 @@ public class SpaceShipMove : MonoBehaviour {
     private float deltaTimeShot = 0.1f;
     */
  
-    private float speed = 35.0f;
+    [SerializeField]
+    private float speed = 20.0f;
+    [SerializeField]
     private float rotspeed = 40.0f;
     public Rigidbody rb;
     public bool isDead = false;
