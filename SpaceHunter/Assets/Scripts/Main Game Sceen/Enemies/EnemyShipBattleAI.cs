@@ -11,7 +11,7 @@ public class EnemyShipBattleAI : MonoBehaviour {
     public ListParticle enemyPlasmaShots;
     
     private float timer;
-    private float deltaTime = 0.1f;
+    private float deltaTime = 0.5f;
     private PlasmaShot leftPlasma;
     private PlasmaShot rightPlasma;
     private bool canShoot = false;

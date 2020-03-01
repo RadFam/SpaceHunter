@@ -36,8 +36,6 @@ public class FSMGlobal<TMonoBehaviour> : SealedSMB where TMonoBehaviour : MonoBe
     */
     public static void Initialise(Animator animator, TMonoBehaviour monoBehaviour)
     {
-        Debug.Log("monoBehaviour class is: " + monoBehaviour.GetType().ToString());
-
         FSMGlobal<TMonoBehaviour>[] fsmGlobal = animator.GetBehaviours<FSMGlobal<TMonoBehaviour>>();
         for (int i = 0; i < fsmGlobal.Length; i++)
         {

@@ -6,6 +6,7 @@ public class EnemyShipAI_Base : MonoBehaviour
 {
     protected Animator anim; // Ссылка на объект аниматор
     public int indexOfPath;
+    public ParticleSystem deathExplode;
     protected ListPathPoints LPP;
 
     protected List<Transform> waypoints; // Список точек по которым движется (патрулирует) вражеский корабль
@@ -47,6 +48,7 @@ public class EnemyShipAI_Base : MonoBehaviour
         enemyBattleAI = GetComponent<EnemyShipBattleAI>();
 
         myHealth = GetComponent<Damagable>();
+        myHealth.enemyChHlth = OnHealthChange;
         myHealth.deathDel = OnDeath;
 
         LPP = FindObjectOfType<ListPathPoints>();
@@ -70,9 +72,18 @@ public class EnemyShipAI_Base : MonoBehaviour
     {
         // Останавливаем FSM
         anim.enabled = false;
-
+        deathExplode.Play();
         // Уничтожаем объект
+        Invoke("MyDestroy", 1.8f);
+    }
+    private void MyDestroy()
+    {
         Destroy(gameObject);
+    }
+
+    public void OnHealthChange(float val)
+    {
+        Debug.Log("My Health is: " + val.ToString());
     }
 
     public bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)

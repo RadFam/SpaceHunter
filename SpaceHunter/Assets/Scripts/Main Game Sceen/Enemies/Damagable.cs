@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Damagable : MonoBehaviour {
-
-    private float healthPoints = 10.0f;
-    private float shieldPoints = 0.0f;
+    
+    [SerializeField]
+    float healthPoints = 10.0f;
+    [SerializeField]
+    float shieldPoints = 0.0f;
 
     private float maxHealthPoints;
     private float maxShieldPoints;
@@ -20,7 +22,7 @@ public class Damagable : MonoBehaviour {
     public delegate void PlanetChangeHealth(float val);
     public PlanetChangeHealth planetChHlth;
     public delegate void EnemyChangeHealth(float val);
-    public PlanetChangeHealth enemyChHlth;
+    public EnemyChangeHealth enemyChHlth;
 
     public float currentHealth
     {

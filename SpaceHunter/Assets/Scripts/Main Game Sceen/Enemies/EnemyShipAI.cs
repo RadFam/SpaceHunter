@@ -169,6 +169,10 @@ public class EnemyShipAI : EnemyShipAI_Base
     public override void PatrollingSpace()
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
+        if (addedWayIndex == -1)
+        {
+            currWayPoint = waypointsCoord[currWayIndex];
+        }
         wayVector = currWayPoint - gameObject.transform.position;
 
         // Считает расстояние до точки назначения

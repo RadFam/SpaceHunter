@@ -53,7 +53,6 @@ public class WanderingScript : FSMGlobal<EnemyShipAI_Base>
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
         // В родительсвом классе вызываем функцию PatrollingSpace, которая определяет наше движение по точкам маршрута
-        Debug.Log("m_MonoBehaviour class is: " + m_MonoBehaviour.GetType().ToString());
         m_MonoBehaviour.PatrollingSpace();
 
         // Раз в obstacleRebootTime проверяем в функции CheckForWanderingObstacle родительского класса, нет ли перед нами препятствий
