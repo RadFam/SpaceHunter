@@ -43,7 +43,6 @@ public class PlasmaShotEffect : MonoBehaviour {
                 //if ((hit.collider.gameObject.layer == playerMask.value) || (hit.collider.gameObject.layer == enemyMask.value))
                 if ((hit.collider.tag == "Player") || (hit.collider.tag == "Enemy"))
                 {
-                    Debug.Log("Enemy Shot was");
                     PS.PlayEffect(hit.point);
                     myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
                     EndScript();

@@ -83,7 +83,7 @@ public class EnemyShipAI_Base : MonoBehaviour
 
     public void OnHealthChange(float val)
     {
-        Debug.Log("My Health is: " + val.ToString());
+        //Debug.Log("My Health is: " + val.ToString());
     }
 
     public bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)

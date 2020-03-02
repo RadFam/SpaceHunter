@@ -5,7 +5,7 @@ using UnityEngine;
 public class RunawayScript : FSMGlobal<EnemyShipAI_Base>
 {
     private float obstacleRebootTime = 0.5f; // через какой промежуток времени мы делаем проверку, нет ли перед нами препятствий
-    private float runawayRebootTime = 0.05f; // через какой промежуток времени мы делаем проверку, можно ли оставаться в состоянии убегания
+    private float runawayRebootTime = 5f; // через какой промежуток времени мы делаем проверку, можно ли оставаться в состоянии убегания
     private float spendTime = 0.0f;
     private float spendTime_2 = 0.0f;
 
@@ -18,13 +18,12 @@ public class RunawayScript : FSMGlobal<EnemyShipAI_Base>
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         spendTime = obstacleRebootTime;
-        spendTime_2 = runawayRebootTime;
+        spendTime_2 = 0.0f;
     }
 
     //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         m_MonoBehaviour.RunawayState();
 
         if (spendTime >= obstacleRebootTime)

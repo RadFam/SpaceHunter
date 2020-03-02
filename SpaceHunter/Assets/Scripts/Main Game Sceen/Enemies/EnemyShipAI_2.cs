@@ -23,7 +23,7 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     [SerializeField]
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
     [SerializeField]
-    private float timer = 0.0f;
+    private float timer = 0.2f;
 
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
@@ -37,10 +37,9 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     {
         base.StartBegin();
 
+        FSMGlobal<EnemyShipAI_Base>.Initialise(anim, this);
+
         myHealth.enemyChHlth = ShipWasAttacked;
-
-        FSMGlobal<EnemyShipAI_2>.Initialise(anim, this);
-
         wayVector = currWayPoint - gameObject.transform.position;
     }
 
@@ -115,6 +114,10 @@ public class EnemyShipAI_2 : EnemyShipAI_Base
     public override void PatrollingSpace()
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
+        if (addedWayIndex == -1)
+        {
+            currWayPoint = waypointsCoord[currWayIndex];
+        }
         wayVector = currWayPoint - gameObject.transform.position;
 
         // Считает расстояние до точки назначения
