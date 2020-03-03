@@ -55,6 +55,10 @@ public class PlasmaShotEffect : MonoBehaviour {
                     PS.PlayEffect(hit.point);
                     EndScript();
                 }
+                if (hit.collider.tag == "PlasmaArea")
+                {
+                    myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
+                }
             }
 
             oldPosition = gameObject.transform.position;

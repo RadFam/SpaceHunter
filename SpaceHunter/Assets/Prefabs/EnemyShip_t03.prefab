@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1536998897}
   - component: {fileID: 1536998898}
+  - component: {fileID: 7144078684828115198}
   - component: {fileID: 9024356159291237264}
   m_Layer: 10
   m_Name: ViewOfPlasma
-  m_TagString: Untagged
+  m_TagString: PlasmaArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,11 +41,26 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536998896}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 30, y: 30, z: 3}
+  m_Size: {x: 30, y: 30, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7144078684828115198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536998896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41803d9ec23f3be4ea9806668edc890e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 10
+  shieldPoints: 0
+  myObject: {fileID: 1536998896}
 --- !u!114 &9024356159291237264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,19 +74,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upAI: {fileID: 9024356158852650138}
---- !u!65 &9024356159287420252
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1016996627214253130}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 3.5}
-  m_Center: {x: 0, y: 0, z: 0.54}
 --- !u!1 &1119299197327567249
 GameObject:
   m_ObjectHideFlags: 0
@@ -24212,6 +24215,7 @@ GameObject:
   - component: {fileID: 9024356158852650139}
   - component: {fileID: 9024356158852650136}
   - component: {fileID: 9024356158852650137}
+  - component: {fileID: 533703940798034796}
   m_Layer: 10
   m_Name: EnemyShip_t03
   m_TagString: Enemy
@@ -24299,6 +24303,15 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 512
+  sightRange: 100
+  sightAngle: 150
+  attackRange: 45
+  attackAngle: 5
+  cruisingSpeed: 0
+  rotationSpeed: 0
+  takeNextWaypointDist: 5
+  timerOfAnalyse: 0.2
+  timer: 0.2
 --- !u!114 &9024356158852650139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24328,7 +24341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 10
   shieldPoints: 0
-  myObject: {fileID: 0}
+  myObject: {fileID: 9024356158852650143}
 --- !u!114 &9024356158852650137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24356,6 +24369,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!65 &533703940798034796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9024356158852650143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0, y: 0, z: 0.3}
 --- !u!1 &9024356159050787694
 GameObject:
   m_ObjectHideFlags: 0
@@ -24543,12 +24569,6 @@ PrefabInstance:
 --- !u!4 &4054999792184905305 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 16703eaf625a0d14bba939ea5ae7c817,
-    type: 3}
-  m_PrefabInstance: {fileID: 9024356159287420227}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1016996627214253130 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 16703eaf625a0d14bba939ea5ae7c817,
     type: 3}
   m_PrefabInstance: {fileID: 9024356159287420227}
   m_PrefabAsset: {fileID: 0}

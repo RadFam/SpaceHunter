@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class EnemyShipAI_3 : EnemyShipAI_Base
 {
+    [SerializeField]
     protected float sightRange = 100.0f;
+    [SerializeField]
     protected float sightAngle = 150.0f;
+    [SerializeField]
     protected float attackRange = 45.0f;
+    [SerializeField]
     protected float attackAngle = 5.0f;
+    [SerializeField]
     protected float cruisingSpeed = 30.0f;
+    [SerializeField]
     protected float rotationSpeed = 1.5f;
+    [SerializeField]
     protected float takeNextWaypointDist = 5.0f;
 
+    [SerializeField]
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
-    private float timer = 0.0f;
+    [SerializeField]
+    private float timer = 0.2f;
 
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
@@ -141,6 +150,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
             // Проверяем на наличие препятствий
             if (!CheckForObstacleHunt())
             {
+                Debug.Log("ScanForChase has worked");
                 anim.SetTrigger(m_HashChasing);
             }
         }
@@ -191,9 +201,11 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
 
     public override void ShipWasNearlyAttacked()
     {
+        Debug.Log("Enter into ShipWasNearlyAttacked");
         // Проверить, есть ли в радиусе досягаемости корабль игрока и потом перейти в погоню за ним
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering"))
         {
+            Debug.Log("Analyse for Chase");
             CheckForChaseSpecial();
         }
     }
@@ -202,6 +214,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         if (distanceToPlayer <= sightRange)
         {
+            Debug.Log("Start to chase");
             anim.SetTrigger(m_HashChasing);
         }
     }

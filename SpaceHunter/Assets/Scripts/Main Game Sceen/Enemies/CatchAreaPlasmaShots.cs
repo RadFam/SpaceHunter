@@ -6,11 +6,15 @@ public class CatchAreaPlasmaShots : MonoBehaviour
 {
     public EnemyShipAI_Base upAI;
 
-    public void OnTriggerEnter(Collider other)
+    protected Damagable myDamage;
+    private void Start()
     {
-        if (other.gameObject.tag == "PlayerPlasma")
-        {
-            upAI.ShipWasNearlyAttacked();
-        }
+        myDamage = GetComponent<Damagable>();
+        myDamage.plasmaNearFlight = NearPlasmaDetect;
+    }
+
+    public void NearPlasmaDetect()
+    {
+        upAI.ShipWasNearlyAttacked();
     }
 }

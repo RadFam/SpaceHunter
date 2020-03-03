@@ -23,6 +23,8 @@ public class Damagable : MonoBehaviour {
     public PlanetChangeHealth planetChHlth;
     public delegate void EnemyChangeHealth(float val);
     public EnemyChangeHealth enemyChHlth;
+    public delegate void PlasmaAreaDetector();
+    public PlasmaAreaDetector plasmaNearFlight;
 
     public float currentHealth
     {
@@ -99,6 +101,11 @@ public class Damagable : MonoBehaviour {
             if (myObject.tag == "Enemy")
             {
                 enemyChHlth(healthPoints);
+            }
+
+            if (myObject.tag == "PlasmaArea")
+            {
+                plasmaNearFlight();
             }
         }
     }
