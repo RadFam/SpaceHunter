@@ -19,7 +19,6 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
     protected readonly int m_HashAttacking = Animator.StringToHash("Attacking");
-    protected readonly int m_HashRunaway = Animator.StringToHash("Runaway");
     protected readonly int m_HashTargetLost = Animator.StringToHash("TargetLost");
 
     // Use this for initialization
@@ -27,10 +26,9 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         base.StartBegin();
 
+        FSMGlobal<EnemyShipAI_Base>.Initialise(anim, this);
+
         myHealth.enemyChHlth = ShipWasAttacked;
-
-        FSMGlobal<EnemyShipAI_3>.Initialise(anim, this);
-
         wayVector = currWayPoint - gameObject.transform.position;
     }
 
@@ -87,6 +85,10 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     public override void PatrollingSpace()
     {
         // Вычисляет вектор направления движения к очеденой точке назначения
+        if (addedWayIndex == -1)
+        {
+            currWayPoint = waypointsCoord[currWayIndex];
+        }
         wayVector = currWayPoint - gameObject.transform.position;
 
         // Считает расстояние до точки назначения
