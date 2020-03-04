@@ -24,6 +24,8 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     [SerializeField]
     private float timer = 0.2f;
 
+    private bool isChaseState = false;
+
     // Хэш-коды названия состояний в которые переходит вражеский кораблик
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
@@ -86,6 +88,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     public override void ForgetTarget()
     {
         // Принудительно переводим FSM вражеского корабля в состояние Wandering
+        isChaseState = false;
         anim.SetTrigger(m_HashWandering);
         enemyBattleAI.Makeshoot(false);
     }
@@ -133,6 +136,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
     public override void ChasingSpace()
     {
+        Debug.Log("Me chasing");
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
@@ -145,12 +149,13 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     // Проверяет можем ли мы перейти в состояние Chasing
     public override void ScanForChase()
     {
-        if ((distanceToPlayer <= sightRange) && (angleToPlayer <= sightAngle))
+        if ((distanceToPlayer <= sightRange) && (angleToPlayer <= sightAngle) && !isChaseState)
         {
             // Проверяем на наличие препятствий
             if (!CheckForObstacleHunt())
             {
                 Debug.Log("ScanForChase has worked");
+                isChaseState = true;
                 anim.SetTrigger(m_HashChasing);
             }
         }
@@ -164,13 +169,13 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
             // Проверяем на наличие препятствий
             if (!CheckForObstacleHunt())
             {
+                isChaseState = false;
                 anim.SetTrigger(m_HashAttacking);
                 enemyBattleAI.Makeshoot(true);
             }
         }
         if ((distanceToPlayer > sightRange) || (angleToPlayer > sightAngle))
         {
-            //Debug.Log("distanceToPlayer: " + distanceToPlayer.ToString() + "  angleToPlayer: " + angleToPlayer.ToString());
             ForgetTarget();
         }
     }
@@ -181,6 +186,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
         if ((distanceToPlayer > attackRange) && (distanceToPlayer <= sightRange) && (angleToPlayer > attackAngle) && (angleToPlayer <= sightAngle))
         {
             enemyBattleAI.Makeshoot(false);
+            isChaseState = false;
             anim.SetTrigger(m_HashChasing);
         }
 
@@ -203,9 +209,10 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         Debug.Log("Enter into ShipWasNearlyAttacked");
         // Проверить, есть ли в радиусе досягаемости корабль игрока и потом перейти в погоню за ним
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering") && !isChaseState)
         {
             Debug.Log("Analyse for Chase");
+            isChaseState = true;
             CheckForChaseSpecial();
         }
     }
@@ -216,6 +223,10 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
         {
             Debug.Log("Start to chase");
             anim.SetTrigger(m_HashChasing);
+        }
+        else
+        {
+            isChaseState = false;
         }
     }
 
@@ -238,6 +249,7 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         if (!isUnderAttack)
         {
+            Debug.Log("Wandering in ScanForWandering");
             anim.SetTrigger(m_HashWandering);
         }
     }

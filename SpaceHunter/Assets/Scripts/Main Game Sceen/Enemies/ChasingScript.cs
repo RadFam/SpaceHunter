@@ -6,7 +6,7 @@ public class ChasingScript : FSMGlobal<EnemyShipAI_Base>
 {
 
     private float obstacleRebootTime = 0.5f; // время проверки, нет ли препятсвий на пути преследования
-    private float attackRebootTime = 0.05f; // время проверки, нельзя ли перейти в состояние атаки
+    private float attackRebootTime = 0.5f; // время проверки, нельзя ли перейти в состояние атаки
     private float spendTime = 0.0f;
     private float spendTime_2 = 0.0f;
 
@@ -14,7 +14,7 @@ public class ChasingScript : FSMGlobal<EnemyShipAI_Base>
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
         spendTime = obstacleRebootTime;
-        spendTime_2 = attackRebootTime;
+        spendTime_2 = 0.0f;
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

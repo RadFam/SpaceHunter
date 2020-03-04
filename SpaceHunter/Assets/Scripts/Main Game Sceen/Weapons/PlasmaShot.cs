@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ForceType
+{ Weak, Average, Strong}
+
 public class PlasmaShot : MonoBehaviour {
 
     public ListParticle LP;
@@ -10,13 +13,27 @@ public class PlasmaShot : MonoBehaviour {
 
     public float timer = 0.0f;
     public float timeToLive = 3.0f;
+    public ForceType myType;
 
     public void OnEnable()
     {
         timer = 0.0f;
+        if (myType == ForceType.Weak)
+        {
+            LP.listBusyObjects_weak.Add(gameObject);
+            LP.listFreeObjects_weak.RemoveAt(0);
+        }
+        if (myType == ForceType.Average)
+        {
+            LP.listBusyObjects_average.Add(gameObject);
+            LP.listFreeObjects_average.RemoveAt(0);
+        }
+        if (myType == ForceType.Strong)
+        {
+            LP.listBusyObjects_strong.Add(gameObject);
+            LP.listFreeObjects_strong.RemoveAt(0);
+        }
 
-        LP.listBusyObjects.Add(gameObject);
-        LP.listFreeObjects.RemoveAt(0);
         MR.enabled = true;
     }
 
@@ -46,8 +63,22 @@ public class PlasmaShot : MonoBehaviour {
     public void EndAll()
     {
         MR.enabled = false;
-        LP.listFreeObjects.Add(gameObject);
-        LP.listBusyObjects.RemoveAt(0);
+        if (myType == ForceType.Weak)
+        {
+            LP.listFreeObjects_weak.Add(gameObject);
+            LP.listBusyObjects_weak.RemoveAt(0);
+        }
+        if (myType == ForceType.Average)
+        {
+            LP.listFreeObjects_average.Add(gameObject);
+            LP.listBusyObjects_average.RemoveAt(0);
+        }
+        if (myType == ForceType.Strong)
+        {
+            LP.listFreeObjects_strong.Add(gameObject);
+            LP.listBusyObjects_strong.RemoveAt(0);
+        }
+        
         LP.UpdateCanvas();
         gameObject.SetActive(false);
     }

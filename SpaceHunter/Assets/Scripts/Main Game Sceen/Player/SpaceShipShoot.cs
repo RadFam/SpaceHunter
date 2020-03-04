@@ -32,10 +32,10 @@ public class SpaceShipShoot : MonoBehaviour {
                 {
                     timer = 0.0f;
 
-                    if (allPlasmaShots.listFreeObjects.Count >= 2) // ЧТобы сразу два снаряда выпустить
+                    if (allPlasmaShots.listFreeObjects_weak.Count >= 2) // ЧТобы сразу два снаряда выпустить
                     {
-                        PlasmaShot leftPlasma = allPlasmaShots.listFreeObjects[0].GetComponent<PlasmaShot>();
-                        PlasmaShot rightPlasma = allPlasmaShots.listFreeObjects[1].GetComponent<PlasmaShot>();
+                        PlasmaShot leftPlasma = allPlasmaShots.listFreeObjects_weak[0].GetComponent<PlasmaShot>();
+                        PlasmaShot rightPlasma = allPlasmaShots.listFreeObjects_weak[1].GetComponent<PlasmaShot>();
                         leftPlasma.gameObject.SetActive(true);
                         leftPlasma.SetCoords(leftGun.transform.position, leftGun.transform.rotation);
                         allPlasmaShots.UpdateCanvas();
