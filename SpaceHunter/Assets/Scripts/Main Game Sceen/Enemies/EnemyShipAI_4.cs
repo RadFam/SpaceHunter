@@ -4,18 +4,28 @@ using UnityEngine;
 
 public class EnemyShipAI_4 : EnemyShipAI_Base
 {
+    [SerializeField]
     protected float sightRange = 100.0f;
+    [SerializeField]
     protected float sightAngle = 150.0f;
+    [SerializeField]
     protected float attackRange = 45.0f;
+    [SerializeField]
     protected float attackAngle = 5.0f;
+    [SerializeField]
     protected float cruisingSpeed = 30.0f;
+    [SerializeField]
     protected float rotationSpeed = 1.5f;
+    [SerializeField]
     protected float takeNextWaypointDist = 5.0f;
 
+    [SerializeField]
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
+    [SerializeField]
     private float timerOfSpecAnalyse = 5.0f;
-    private float timerSpec = 0.0f;
-    private float timer = 0.0f;
+
+    private float timerSpec = 5.0f;
+    private float timer = 0.2f;
 
     protected Vector3 maneuveringPoint;
     protected bool maneuveringState;
@@ -32,10 +42,9 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
     {
         base.StartBegin();
 
+        FSMGlobal<EnemyShipAI_Base>.Initialise(anim, this);
+
         myHealth.enemyChHlth = ShipWasAttacked;
-
-        FSMGlobal<EnemyShipAI_4>.Initialise(anim, this);
-
         currWayPoint = playerObj.ctrlObject.transform.position;
         wayVector = currWayPoint - gameObject.transform.position;
     }
@@ -236,7 +245,7 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
         }
     }
 
-    public bool CheckForManeuverObstacle()
+    public override bool CheckForManeuverObstacle()
     {
         bool ans = CheckForObstacle(sightRange, obstacleMask, out rch);
 
@@ -252,7 +261,7 @@ public class EnemyShipAI_4 : EnemyShipAI_Base
         return ans;
     }
 
-    public void ScanForEndManeuvering()
+    public override void ScanForEndManeuvering()
     {
         if (distanceToPlayer > sightRange)
         {

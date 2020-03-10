@@ -24196,12 +24196,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4199246588223269799}
   - component: {fileID: 4199246588223269800}
+  - component: {fileID: 1924880537}
   - component: {fileID: 4199246588223269801}
   - component: {fileID: 4199246588223269802}
   - component: {fileID: 4199246588223269803}
   - component: {fileID: 4199246588223269804}
   - component: {fileID: 4199246588223269805}
-  - component: {fileID: 1924880537}
   m_Layer: 10
   m_Name: EnemyShip_t01
   m_TagString: Enemy
@@ -24243,6 +24243,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1924880537
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4199246588223269806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2, z: 9.5}
+  m_Center: {x: 0, y: 0, z: 3}
 --- !u!95 &4199246588223269801
 Animator:
   serializedVersion: 3
@@ -24308,9 +24321,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03be5be1f099d764c808c8c3dafdc9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon_weak:
+  - {fileID: 4199246587680430234}
+  - {fileID: 4199246587366387996}
+  weapon_average: []
+  weapon_strong: []
   leftGun: {fileID: 4199246587680430234}
   rightGun: {fileID: 4199246587366387996}
   enemyPlasmaShots: {fileID: 0}
+  deltaTime_1: 0.5
+  deltaTime_2: 0
+  deltaTime_3: 0
 --- !u!114 &4199246588223269804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24323,7 +24344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41803d9ec23f3be4ea9806668edc890e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 10
+  healthPoints: 5
   shieldPoints: 0
   myObject: {fileID: 4199246588223269806}
 --- !u!114 &4199246588223269805
@@ -24353,19 +24374,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!65 &1924880537
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4199246588223269806}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 2, z: 9.5}
-  m_Center: {x: 0, y: 0, z: 3}
 --- !u!1001 &4199246587405936318
 PrefabInstance:
   m_ObjectHideFlags: 0

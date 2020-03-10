@@ -136,7 +136,6 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     // Расчет вектора направления движения к игроку в случае нахождения в состоянии Chasing (преследования)
     public override void ChasingSpace()
     {
-        Debug.Log("Me chasing");
         wayVector = playerObj.ctrlObject.transform.position - gameObject.transform.position;
     }
 
@@ -154,7 +153,6 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
             // Проверяем на наличие препятствий
             if (!CheckForObstacleHunt())
             {
-                Debug.Log("ScanForChase has worked");
                 isChaseState = true;
                 anim.SetTrigger(m_HashChasing);
             }
@@ -207,11 +205,9 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
 
     public override void ShipWasNearlyAttacked()
     {
-        Debug.Log("Enter into ShipWasNearlyAttacked");
         // Проверить, есть ли в радиусе досягаемости корабль игрока и потом перейти в погоню за ним
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wandering") && !isChaseState)
         {
-            Debug.Log("Analyse for Chase");
             isChaseState = true;
             CheckForChaseSpecial();
         }
@@ -221,7 +217,6 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         if (distanceToPlayer <= sightRange)
         {
-            Debug.Log("Start to chase");
             anim.SetTrigger(m_HashChasing);
         }
         else
@@ -249,7 +244,6 @@ public class EnemyShipAI_3 : EnemyShipAI_Base
     {
         if (!isUnderAttack)
         {
-            Debug.Log("Wandering in ScanForWandering");
             anim.SetTrigger(m_HashWandering);
         }
     }

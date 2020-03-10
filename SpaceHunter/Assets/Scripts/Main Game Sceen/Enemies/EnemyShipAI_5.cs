@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class EnemyShipAI_5 : EnemyShipAI_Base
 {
-
+    [SerializeField]
     protected float sightRange = 100.0f;
+    [SerializeField]
     protected float sightAngle = 150.0f;
+    [SerializeField]
     protected float attackRange = 45.0f;
+    [SerializeField]
     protected float attackAngle = 5.0f;
+    [SerializeField]
     protected float cruisingSpeed = 30.0f;
+    [SerializeField]
     protected float rotationSpeed = 1.5f;
+    [SerializeField]
     protected float takeNextWaypointDist = 5.0f;
 
+    [SerializeField]
     private float timerOfAnalyse = 0.2f; // Период времени (в сек) через который вражеский корабль производит анализ своих действий
-    private float timer = 0.0f;
+    [SerializeField]
+    private float timer = 0.2f;
 
     protected readonly int m_HashWandering = Animator.StringToHash("Wandering");
     protected readonly int m_HashChasing = Animator.StringToHash("Chasing");
@@ -26,8 +34,7 @@ public class EnemyShipAI_5 : EnemyShipAI_Base
     {
         base.StartBegin();
 
-        FSMGlobal<EnemyShipAI_5>.Initialise(anim, this);
-
+        FSMGlobal<EnemyShipAI_Base>.Initialise(anim, this);
         wayVector = currWayPoint - gameObject.transform.position;
     }
 

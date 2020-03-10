@@ -9733,9 +9733,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03be5be1f099d764c808c8c3dafdc9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon_weak:
+  - {fileID: 6960396989416321883}
+  - {fileID: 6960396990456348310}
+  weapon_average: []
+  weapon_strong: []
   leftGun: {fileID: 6960396989416321883}
   rightGun: {fileID: 6960396990456348310}
   enemyPlasmaShots: {fileID: 0}
+  deltaTime_1: 0.5
+  deltaTime_2: 0
+  deltaTime_3: 0
 --- !u!114 &6960396990177582745
 MonoBehaviour:
   m_ObjectHideFlags: 0

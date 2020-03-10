@@ -10,8 +10,6 @@ public class EnemyShipBattleAI : MonoBehaviour {
     public List<Transform> weapon_average = new List<Transform>();
     public List<Transform> weapon_strong = new List<Transform>();
 
-    public Transform leftGun;
-    public Transform rightGun;
     public ListParticle enemyPlasmaShots;
 
     private float timer_1, timer_2, timer_3;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ManeuveringScript : FSMGlobal<EnemyShipAI_4> // А не Base AI
+public class ManeuveringScript : FSMGlobal<EnemyShipAI_Base> // А не Base AI
 {
     private float obstacleRebootTime = 0.5f; // через какой промежуток времени мы делаем проверку, нет ли перед нами препятствий
     private float maneuverRebootTime = 0.05f; // через какой промежуток времени мы делаем проверку, можно ли оставаться в состоянии убегания

@@ -150,6 +150,16 @@ public class EnemyShipAI_Base : MonoBehaviour
         return true;
     }
 
+    public virtual bool CheckForManeuverObstacle()
+    {
+        return true;
+    }
+
+    public virtual void ScanForEndManeuvering()
+    {
+
+    }
+
     // Если игрок уничтожен, то "теряем цель"
     public void OnMainPlayerDefeat()
     {
