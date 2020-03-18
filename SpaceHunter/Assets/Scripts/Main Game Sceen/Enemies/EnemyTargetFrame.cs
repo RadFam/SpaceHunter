@@ -12,6 +12,7 @@ public class EnemyTargetFrame : MonoBehaviour
     private float maxDist;
     private float currDist;
     private Vector3 pinAxis;
+    private float coeff = 2.0f;
     
     // Start is called before the first frame update
     void Start()
@@ -32,10 +33,22 @@ public class EnemyTargetFrame : MonoBehaviour
         pinAxis = player.transform.position - gameObject.transform.position;
         currDist = pinAxis.magnitude;
 
-        myCanvas.transform.LookAt(cameraPlaneOrient);
-        //Quaternion rotation = Quaternion.LookRotation(pinAxis, player.GetComponent<SpaceShipWatchEnemies2>().UpVector);
-        //myCanvas.transform.forward = -cameraPlaneOrient.forward;
-        //myCanvas.transform.up = cameraPlaneOrient.up;
+        coeff = 2.0f;
+        if (currDist / maxDist <= 0.75)
+        {
+            coeff = 4.0f;
+        }
+        if (currDist / maxDist <= 0.5)
+        {
+            coeff = 6.0f;
+        }
+        if (currDist / maxDist <= 0.25)
+        {
+            coeff = 8.0f;
+        }
+
+        myCanvas.transform.LookAt(myCanvas.transform.position + cameraPlaneOrient.rotation*Vector3.back, cameraPlaneOrient.rotation*Vector3.up);
+        myCanvas.transform.localScale = Vector3.one * coeff * currDist / maxDist;
         
 
         if (currDist <= maxDist)
