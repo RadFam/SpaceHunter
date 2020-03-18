@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyTargetFrame : MonoBehaviour
 {
     public Canvas myCanvas;
+    public Transform cameraPlaneOrient;
 
     private GameObject player;
     private float maxDist;
@@ -31,8 +32,11 @@ public class EnemyTargetFrame : MonoBehaviour
         pinAxis = player.transform.position - gameObject.transform.position;
         currDist = pinAxis.magnitude;
 
-        Quaternion rotation = Quaternion.LookRotation(pinAxis, player.GetComponent<SpaceShipWatchEnemies2>().UpVector);
-        myCanvas.transform.rotation = rotation;
+        myCanvas.transform.LookAt(cameraPlaneOrient);
+        //Quaternion rotation = Quaternion.LookRotation(pinAxis, player.GetComponent<SpaceShipWatchEnemies2>().UpVector);
+        //myCanvas.transform.forward = -cameraPlaneOrient.forward;
+        //myCanvas.transform.up = cameraPlaneOrient.up;
+        
 
         if (currDist <= maxDist)
         {
