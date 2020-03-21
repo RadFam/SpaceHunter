@@ -76,4 +76,22 @@ public class PlanetCountPortals : MonoBehaviour
             PT.OnPlanetTreasure();
         }
     }
+
+    public void SendBackSignal(int num)
+    {
+        gatesOpened--;
+    }
+
+    public void TangazerSignal()
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            if (transform.GetChild(i).gameObject.tag == "StarGate")
+            {
+                PlanetPortalScript pps = transform.GetChild(0).GetComponent<PlanetPortalScript>();
+                pps.OnCharge();
+            }
+        }
+    }
+
 }

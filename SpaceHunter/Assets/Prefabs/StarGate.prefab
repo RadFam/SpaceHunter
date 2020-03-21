@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 7732917721393170196}
   m_Layer: 0
   m_Name: StarGate
-  m_TagString: Untagged
+  m_TagString: StarPortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -417,9 +417,11 @@ MonoBehaviour:
   myPlanetCtrl: {fileID: 0}
   myCheckCollider: {fileID: 7732917721393170199}
   changeTexture: {fileID: 2800000, guid: 466b272bd380aaf4bb2c2f432d013ecc, type: 3}
+  changeTexture_init: {fileID: 2800000, guid: df620eeab50042141a7069817804d213, type: 3}
   warp1: {fileID: 829874463}
   warp2: {fileID: 1086203476}
   warp3: {fileID: 2046701151}
+  rechargeTime: 60
 --- !u!1 &7732917720897971447
 GameObject:
   m_ObjectHideFlags: 0

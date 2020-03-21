@@ -12,6 +12,7 @@ TagManager:
   - Resource
   - PlayerPlasma
   - PlasmaArea
+  - StarPortal
   layers:
   - Default
   - TransparentFX
