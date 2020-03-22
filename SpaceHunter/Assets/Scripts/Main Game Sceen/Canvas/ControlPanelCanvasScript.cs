@@ -29,7 +29,7 @@ public class ControlPanelCanvasScript : MonoBehaviour {
     public void UpdateShield(float currShield)
     {
         float fullShield = CSP.pIS;
-        int res = (int)(currShield / fullShield * 4.0f);
+        int res = (int)((fullShield - currShield) / fullShield * 4.0f);
         shieldImage.sprite = shieldState[res];
 
         // Здесь еще сделать звуковой(!) эффект ломающегося щита, когда выбивается одна из его четвертей

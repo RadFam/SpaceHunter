@@ -10,7 +10,7 @@ public class CommonSceneParams : MonoBehaviour {
 
     private float lastFuelVolume;
 
-    private List<EnemyShipAI> enemies;
+    private List<EnemyShipAI_Base> enemies;
     private ControlPanelCanvasScript CPCS;
 
     public int currLevel;

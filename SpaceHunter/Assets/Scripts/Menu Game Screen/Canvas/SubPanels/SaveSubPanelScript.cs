@@ -18,6 +18,8 @@ public class SaveSubPanelScript : MonoBehaviour
         if (editText.text != "")
         {
             string saveFilename = editText.text;
+            ConstGameCtrl.instance.Save(saveFilename);
+            gameObject.SetActive(false);
         }
     }
 

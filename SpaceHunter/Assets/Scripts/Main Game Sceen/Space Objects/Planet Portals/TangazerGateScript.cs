@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class TangazerGateScript : MonoBehaviour
 {
-    public Collider myCheckCollider;
+    public Sprite portal_1;
+    public Sprite portal_2;
+
+    public SpriteRenderer portalImage;
 
     public GameObject part1;
     public GameObject part2;
@@ -12,6 +15,8 @@ public class TangazerGateScript : MonoBehaviour
     public GameObject part4;
     public GameObject part5;
     public GameObject part6;
+
+    protected Collider myCheckCollider;
 
     protected float speedRot1 = -35.0f;
     protected float speedRot2 = 52.0f;
@@ -30,6 +35,7 @@ public class TangazerGateScript : MonoBehaviour
     void Start()
     {
         isPassed = false;
+        myCheckCollider = gameObject.GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -68,6 +74,7 @@ public class TangazerGateScript : MonoBehaviour
         isPassed = true;
         myCheckCollider.enabled = false;
         // Меняем цвет портала
+        portalImage.sprite = portal_1;
 
         // Запускаме цепочку случайных включений у планетных порталов
 
@@ -78,5 +85,6 @@ public class TangazerGateScript : MonoBehaviour
         isPassed = false;
         myCheckCollider.enabled = true;
         // Меняем цвет портала, например
+        portalImage.sprite = portal_2;
     }
 }

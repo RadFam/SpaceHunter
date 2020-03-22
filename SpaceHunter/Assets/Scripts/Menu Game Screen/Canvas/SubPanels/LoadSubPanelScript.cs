@@ -12,11 +12,13 @@ public class LoadSubPanelScript : MonoBehaviour
     private int fileCounts = 0;
     private int fileChosen = 0;
     private List<LoadTextElement> loads = new List<LoadTextElement>();
+    private List<string> filenames = new List<string>();
 
     public void OnEnable()
     {
         string[] fileEntries = Directory.GetFiles("/Saves", fileExt);
         fileCounts = fileEntries.Length;
+        fileChosen = 0;
 
         if (fileCounts > 0)
         {
@@ -29,7 +31,9 @@ public class LoadSubPanelScript : MonoBehaviour
                 tmp = tmp.Replace(".shs", string.Empty);
                 obj.SetParams(tmp, i);
                 loads.Add(obj);
+                filenames.Add(tmp);
             }
+            loads[0].SetColor(2);
         }
     }
 
@@ -51,12 +55,14 @@ public class LoadSubPanelScript : MonoBehaviour
 
     public void OnOkButtonPressed()
     {
-        
+        ConstGameCtrl.instance.Load(filenames[fileChosen]);
+        OnExitButtonPressed();
     }
 
     public void OnExitButtonPressed()
     {
         loads.Clear();
+        filenames.Clear();
         gameObject.SetActive(false);
     }
 }
