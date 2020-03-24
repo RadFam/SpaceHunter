@@ -12,6 +12,8 @@ public class ConstGameCtrl : MonoBehaviour {
                                 Melnibonum, Massaracsheet, Zorim, Alvesid, Matrium, YashmitSalt, Asphylit, Miltanium, Kilubus, Sirlic,
                                 Nemesid, Latrimeumstone, Koyperit, Kryptonit, RainbowCorall, Oortenstone, Alexandrit, Ogamit, Coronium, Nebulium};
 
+    public enum PlayerShipUpgrades { health, shield, fuel, radar, engine, maneuver, weapon};
+
     public static ConstGameCtrl instance = null;
     public PrizeCollection mainPC;
     private List<GeoPrize> allPrizes;
@@ -32,6 +34,8 @@ public class ConstGameCtrl : MonoBehaviour {
     private int playerEngine_level; public int PEngine { get { return playerEngine_level; } set { playerEngine_level = value; } }// Скорость линейного движения игрока
     [SerializeField]
     private int playerManeuver_level; public int PManeuver { get { return playerManeuver_level; } set { playerManeuver_level = value; } }// Скорость поворотов игрока
+    [SerializeField]
+    private int playerWeapon_level; public int PWeapon { get { return playerWeapon_level; } set { playerWeapon_level = value; } }// Сила орудия игрока
     [SerializeField]
     private int playerProgress_level; public int PProgress { get { return playerProgress_level; } set { playerProgress_level = value; } }// Уровень, которого достиг игрок по ходу прохождения игры
     [SerializeField]
@@ -174,5 +178,30 @@ public class ConstGameCtrl : MonoBehaviour {
 
         sEntity.ReloadData();
         FillPlayerCollectionGeo();
+    }
+
+    public int GetUpgradeLevel(PlayerShipUpgrades pUp)
+    {
+        switch (pUp)
+        {
+            case PlayerShipUpgrades.health:
+                return playerHealth_level;
+            case PlayerShipUpgrades.shield:
+                return playerShield_level;
+            case PlayerShipUpgrades.fuel:
+                return playerFuel_level;
+            case PlayerShipUpgrades.radar:
+                return playerRadar_level;
+            case PlayerShipUpgrades.engine:
+                return playerEngine_level;
+            case PlayerShipUpgrades.maneuver:
+                return playerManeuver_level;
+        }
+        return 0;
+    }
+
+    public bool TryToUpgrade(PlayerShipUpgrades pUp)
+    {
+        return false;
     }
 }

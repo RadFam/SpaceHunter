@@ -10,6 +10,7 @@ public class SavebleEntity
     private int radar;
     private int engine;
     private int maneuver;
+    private int weapon;
     private int progress;
     private int money;
     private List<string> minerals = new List<string>();
@@ -26,6 +27,7 @@ public class SavebleEntity
         radar = ConstGameCtrl.instance.PRadar;
         engine = ConstGameCtrl.instance.PEngine;
         maneuver = ConstGameCtrl.instance.PManeuver;
+        weapon = ConstGameCtrl.instance.PWeapon;
         progress = ConstGameCtrl.instance.PProgress;
         money = ConstGameCtrl.instance.PMoney;
 
@@ -41,6 +43,7 @@ public class SavebleEntity
         ConstGameCtrl.instance.PRadar = radar;
         ConstGameCtrl.instance.PEngine = engine;
         ConstGameCtrl.instance.PManeuver = maneuver;
+        ConstGameCtrl.instance.PWeapon = weapon;
         ConstGameCtrl.instance.PProgress = progress;
         ConstGameCtrl.instance.PMoney = money;
         ConstGameCtrl.instance.PMinerals = minerals;
