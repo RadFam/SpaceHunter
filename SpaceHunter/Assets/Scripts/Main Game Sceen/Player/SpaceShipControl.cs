@@ -16,7 +16,12 @@ public class SpaceShipControl : MonoBehaviour {
     private double cameraShipDist;
     private double cameraShipDistBound = 60.0f;
     private Vector3 cameraMoveAlong;
-    
+
+    private Vector3 cameraGamePosition = new Vector3(0.0f, 12.0f, -11.0f);
+    private Vector3 cameraGameAngles = new Vector3(30.0f, 0.0f, 0.0f);
+    private Vector3 cameraVortexPosition = new Vector3(0.0f, 2.5f, -7.5f);
+    private Vector3 cameraVortexAngles = new Vector3(15.0f, 0.0f, 0.0f);
+
     Damagable myDamagable;
 
 	// Use this for initialization
@@ -33,7 +38,7 @@ public class SpaceShipControl : MonoBehaviour {
         myDamagable.currentShield = CSP.pIS;
         myDamagable.myObject = gameObject;
 
-        playerCamera.transform.localPosition = new Vector3(0.0f, 12.0f, -11.0f);
+        playerCamera.transform.localPosition = cameraGamePosition;
         cameraShipDist = Vector3.Distance(playerCamera.transform.localPosition, shipObject.transform.localPosition);
         cameraMoveAlong = new Vector3(0.0f, 12.0f, -36.0f);
         cameraMoveAlong.Normalize();
@@ -75,4 +80,27 @@ public class SpaceShipControl : MonoBehaviour {
             yield return new WaitForSeconds(0.01f);
         }
     }
+
+    public void FreezeAll()
+    {
+        SpaceShipMove ssm = gameObject.GetComponent<SpaceShipMove>();
+        ssm.DisableControl();
+        playerCamera.transform.localPosition = cameraVortexPosition;
+        playerCamera.transform.localEulerAngles = cameraVortexAngles;
+    }
+
+    public void UnfreezeAll()
+    {
+        SpaceShipMove ssm = gameObject.GetComponent<SpaceShipMove>();
+        Animation anim = playerCamera.GetComponent<Animation>();
+        anim.Play("CameraVortexOut");
+        StartCoroutine(UnfreezeCoroutine());
+        ssm.EnableControl();
+    }
+
+    IEnumerator UnfreezeCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+    }
+
 }

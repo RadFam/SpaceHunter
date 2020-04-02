@@ -33,12 +33,16 @@ public class SpaceShipMove : MonoBehaviour {
 
     private float specTime = 0.01f;
     private Quaternion initSelfRotate;
-    
+
+    private bool isControlled = true;
+    private Quaternion initRotation;   
     // Use this for initialization
 	void Start () 
     {
         //timerShot = deltaTimeShot;
         isDead = false;
+        isControlled = true;
+        initRotation = shipObject.transform.localRotation;
         initSelfRotate = shipObject.transform.localRotation;
         rb.velocity = rb.transform.forward * speed;
         //StartCoroutine(CorrectorPlayerOrient());
@@ -47,7 +51,7 @@ public class SpaceShipMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {    
-        if (!isDead)
+        if (!isDead && isControlled)
         {
             // События от клавиатуры
             if (Input.GetKey(KeyCode.UpArrow))
@@ -297,5 +301,26 @@ public class SpaceShipMove : MonoBehaviour {
             counterLeft = counterLeft - sign;
         }
         yield return new WaitForSeconds(0.01f);
+    }
+
+    public void DisableControl()
+    {
+        isControlled = false;
+        // orient ship normally
+        mooveU = false;
+        mooveUR = false;
+        mooveL = false;
+        mooveLR = false;
+        counterUp = 0;
+        counterLeft = 0;
+        shipObject.transform.localRotation = initRotation;
+
+        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+    }
+
+    public void EnableControl()
+    {
+        isControlled = true;
+        rb.velocity = rb.transform.forward * speed;
     }
 }
