@@ -70,15 +70,19 @@ public class Damagable : MonoBehaviour {
             {
                 shieldPoints = 0.0f;
             }
-            else if (minusOfShield > shieldPoints)
+            else if (minusOfShield > shieldPoints && shieldPoints == 0)
+            {
+                healthPoints -= minusOfShield * 2.0f;
+            }
+            else if (minusOfShield > shieldPoints && shieldPoints > 0)
             {
                 minusOfShield -= shieldPoints;
                 shieldPoints = 0.0f;
-                healthPoints -= minusOfShield * 2.0f;
+                healthPoints -= minusOfShield; // was ... * 2.0f
             }
 
-            //Debug.Log("My Current health points are: " + healthPoints.ToString());
-            if (healthPoints <= 0.0f)
+                //Debug.Log("My Current health points are: " + healthPoints.ToString());
+                if (healthPoints <= 0.0f)
             {
                 invulnerableAfterDamage = true;
                 // Запускаем процедуру гибели объекта
