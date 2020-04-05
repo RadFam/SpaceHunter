@@ -16,8 +16,9 @@ public class ConstGameCtrl : MonoBehaviour {
 
     public static ConstGameCtrl instance = null;
     public PrizeCollection mainPC;
-    private List<GeoPrize> allPrizes;
+    public List<GeoPrize> allPrizes;
 
+    public SpaceShop playerGoods;
     public List<GeoPrize> playerCollection; // Минералы, которые игрок успел собрать
     public int playerCurrentGold;
     public Dictionary<string, int> playerInventory;
@@ -49,6 +50,16 @@ public class ConstGameCtrl : MonoBehaviour {
     void Start () 
     {
         DontDestroyOnLoad(this.gameObject);
+
+        playerHealth_level = 0;
+        playerShield_level = 0;
+        playerFuel_level = 0;
+        playerRadar_level = 0;
+        playerEngine_level = 0;
+        playerManeuver_level = 0;
+        playerWeapon_level = 0;
+        playerProgress_level = 0;
+        playerMinerals_collection.Clear();
 
         if (instance == null)
         {
@@ -196,12 +207,60 @@ public class ConstGameCtrl : MonoBehaviour {
                 return playerEngine_level;
             case PlayerShipUpgrades.maneuver:
                 return playerManeuver_level;
+            case PlayerShipUpgrades.weapon:
+                return playerWeapon_level;
         }
         return 0;
     }
 
+    public void SetUpgradeLevel(PlayerShipUpgrades pUp)
+    {
+        switch (pUp)
+        {
+            case PlayerShipUpgrades.health:
+                playerHealth_level++;
+                return;
+            case PlayerShipUpgrades.shield:
+                playerShield_level++;
+                return;
+            case PlayerShipUpgrades.fuel:
+                playerFuel_level++;
+                return;
+            case PlayerShipUpgrades.radar:
+                playerRadar_level++;
+                return;
+            case PlayerShipUpgrades.engine:
+                playerEngine_level++;
+                return;
+            case PlayerShipUpgrades.maneuver:
+                playerManeuver_level++;
+                return;
+            case PlayerShipUpgrades.weapon:
+                playerWeapon_level++;
+                return;
+        }
+    }
+
     public bool TryToUpgrade(PlayerShipUpgrades pUp)
     {
+        if (GetUpgradeLevel(pUp) == 3)
+        {
+            return false;
+        }
+        else
+        {
+            if (playerCurrentGold >= playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp)+1].cost) // Золота хватает
+            {
+                playerCurrentGold -= playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp) + 1].cost;
+                SetUpgradeLevel(pUp);
+                return true;
+            }
+            else // золота не хватает
+            {
+                return false;
+            }
+        }
+
         return false;
     }
 }

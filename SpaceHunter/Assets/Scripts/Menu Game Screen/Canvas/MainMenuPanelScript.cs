@@ -23,6 +23,16 @@ public class MainMenuPanelScript : MonoBehaviour
     {
         panels[panelNum].SetActive(true);
 
+        if (panelNum == 1)
+        {
+            panels[panelNum].GetComponent<LevelSubPanelScript>().UnlockButtons(ConstGameCtrl.instance.PProgress);
+        }
+
+        if (panelNum == 3)
+        {
+            panels[panelNum].GetComponent<SpaceShopCtrl>().UpdateAllUpgrades();
+        }
+
         /*
         switch (panelNum)
         {

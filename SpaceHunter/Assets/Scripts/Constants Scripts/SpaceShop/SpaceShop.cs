@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public struct SpaceShopGood
+{
+    public ConstGameCtrl.PlayerShipUpgrades upgradeType;
+    public List<ProductRate> upgradeDefinition;
+}
+
+[System.Serializable]
 public struct ProductRate
 {
+    public string name;
     public int property;
     public int cost;
 }
@@ -13,9 +21,9 @@ public struct ProductRate
 public class SpaceShop : ScriptableObject
 {
     [SerializeField]
-    private Dictionary<ConstGameCtrl.PlayerShipUpgrades, ProductRate> allSpaceShopVariety;
+    private List<SpaceShopGood> allSpaceShopVariety;
 
-    public Dictionary<ConstGameCtrl.PlayerShipUpgrades, ProductRate> ShopProducts
+    public List<SpaceShopGood> ShopProducts
     {
         get { return allSpaceShopVariety; }
     }

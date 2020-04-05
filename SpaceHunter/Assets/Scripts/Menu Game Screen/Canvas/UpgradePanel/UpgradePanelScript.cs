@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UpgradePanelScript : MonoBehaviour
+public class UpgradePanelScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public ConstGameCtrl.PlayerShipUpgrades upgradeType;
     public Image statusImage;
     public Image upgradeImage;
+    public CostToolTip myToolTip;
 
     [SerializeField]
     List<Sprite> myUpgradeImages = new List<Sprite>();
@@ -35,7 +37,27 @@ public class UpgradePanelScript : MonoBehaviour
     {
         if (ConstGameCtrl.instance.TryToUpgrade(upgradeType))
         {
+            myToolTip.OnCloseTooltip();
             UpdateStatus();
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (myCurrLevel < 3)
+        {
+            int nextLevel = myCurrLevel + 1;
+            string name = ConstGameCtrl.instance.playerGoods.ShopProducts[(int)upgradeType].upgradeDefinition[nextLevel].name;
+            int cost = ConstGameCtrl.instance.playerGoods.ShopProducts[(int)upgradeType].upgradeDefinition[nextLevel].cost;
+            myToolTip.OnShowTooltip(name, cost);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (myCurrLevel < 3)
+        {
+            myToolTip.OnCloseTooltip();
         }
     }
 }
