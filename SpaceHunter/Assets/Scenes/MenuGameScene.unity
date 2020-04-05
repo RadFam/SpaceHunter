@@ -2765,7 +2765,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 19.15
+  m_fontSize: 20.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2940,7 +2940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Content: {fileID: 354225053}
   CollectPanel: {fileID: 1021776208}
-  MineralImage: {fileID: 171908846}
+  MineralImages: []
 --- !u!1 &297889250
 GameObject:
   m_ObjectHideFlags: 0
@@ -6302,7 +6302,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24.5
+  m_fontSize: 26.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10565,6 +10565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPC: {fileID: 11400000, guid: e6a015de87d5b1e4b90e15e83d15390c, type: 2}
+  allPrizes: []
   playerGoods: {fileID: 11400000, guid: bb2b7628cfc3206448edd49d65e905c3, type: 2}
   playerCollection: []
   playerCurrentGold: 0
@@ -12350,7 +12351,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 384051722}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.34977123
+  m_Size: 0.36545196
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13161,7 +13162,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 25
+  m_fontSize: 26.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
