@@ -25,6 +25,8 @@ public class ScaleWindowScript : MonoBehaviour
 
     public void ScaleInnerContent()
     {
+        rectTransform = GetComponent<RectTransform>();
+
         float width = rectTransform.rect.width;
         float height = width * 2.0f;
 
@@ -35,6 +37,7 @@ public class ScaleWindowScript : MonoBehaviour
         glg.cellSize = new Vector2(width * 0.96875f / 5, width * 0.96875f / 5);
         glg.padding.left = (int)(width * 0.015625f);
         glg.padding.top = (int)(width * 0.015625f);
+        glg.spacing = new Vector2(0f, height * 0.0015f);
 
         foreach (GameObject me in MineralImages)
         {
@@ -56,16 +59,25 @@ public class ScaleWindowScript : MonoBehaviour
             ind = collection.FindIndex(x => x.prizeName == ConstGameCtrl.instance.allPrizes[i].prizeName);
             if (ind >= 0)
             {
+                /*
                 var tempColor = img.color;
                 tempColor.a = 1f;
                 img.color = tempColor;
                 img.sprite = ConstGameCtrl.instance.allPrizes[i].prizeSprite;
+                */
+
+                MineralImageScript mis = me.GetComponent<MineralImageScript>();
+                mis.SetOn(ConstGameCtrl.instance.allPrizes[i].prizeSprite, i);
             }
             else
             {
+                /*
                 var tempColor = img.color;
                 tempColor.a = 0f;
                 img.color = tempColor;
+                */
+                MineralImageScript mis = me.GetComponent<MineralImageScript>();
+                mis.SetOff();
             }
         }
     }

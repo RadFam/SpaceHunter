@@ -28,6 +28,12 @@ public class MainMenuPanelScript : MonoBehaviour
             panels[panelNum].GetComponent<LevelSubPanelScript>().UnlockButtons(ConstGameCtrl.instance.PProgress);
         }
 
+        if (panelNum == 2)
+        {
+            panels[panelNum].GetComponent<CollectionPanelScaleScript>().CalculateScaling();
+            panels[panelNum].GetComponent<CollectionPanelScaleScript>().DrawCollection();
+        }
+
         if (panelNum == 3)
         {
             panels[panelNum].GetComponent<SpaceShopCtrl>().UpdateAllUpgrades();

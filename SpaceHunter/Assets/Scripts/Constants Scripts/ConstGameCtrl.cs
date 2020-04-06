@@ -67,6 +67,21 @@ public class ConstGameCtrl : MonoBehaviour {
             allPrizes = mainPC.GamePrize;
             playerInventory = new Dictionary<string, int>();
 
+            playerCollection = allPrizes;
+
+            /*
+            playerCollection.Add(allPrizes[0]);
+            playerCollection.Add(allPrizes[1]);
+            playerCollection.Add(allPrizes[7]);
+            playerCollection.Add(allPrizes[14]);
+            playerCollection.Add(allPrizes[26]);
+            playerCollection.Add(allPrizes[33]);
+            playerCollection.Add(allPrizes[40]);
+            playerCollection.Add(allPrizes[41]);
+            playerCollection.Add(allPrizes[46]);
+            playerCollection.Add(allPrizes[49]);
+            */
+
             sEntity = new SavebleEntity();
         }	
 	}
@@ -122,7 +137,7 @@ public class ConstGameCtrl : MonoBehaviour {
         FillPlayerCollectionNames();
     }
 
-    // Для отрисовки текущей коллекции
+    // Для отрисовки текущей коллекции // В таком виде не работает. Расчет того, как рисовать идет в скрипте, прикрепленном к UI форме
     public List<GeoPrize> CurrentPlayerCollection()
     {
         List<GeoPrize> returnList = new List<GeoPrize>(50);

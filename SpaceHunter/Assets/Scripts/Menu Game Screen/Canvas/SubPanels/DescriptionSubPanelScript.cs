@@ -10,11 +10,12 @@ public class DescriptionSubPanelScript : GeneralMenu
 
     void Start()
     {
-        myText.text = "";
+        //myText.text = "";
     }
 
     public void SetText(string txt)
     {
+        Debug.Log(txt);
         myText.text = txt;
     }
 }
