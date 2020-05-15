@@ -123,7 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86b4ff7e9d97c441b972404be01e251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointOfTeleport: []
+  pointOfTeleport:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnVortex: {fileID: 0}
   player: {fileID: 0}
 --- !u!1 &3672622322551581882

@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
 public class LoadTextElement : MonoBehaviour, IPointerClickHandler
 {
     // Start is called before the first frame update
-    public TextMeshProUGUI loadText;
+    //public TextMeshProUGUI loadText;
+    public Text loadText;
     private int myNum;
 
     public int MyNum
@@ -24,7 +26,7 @@ public class LoadTextElement : MonoBehaviour, IPointerClickHandler
 
     public void SetColor(int colorType)
     {
-        Color color;
+        Color color = new Color(0, 0, 0);
         if (colorType == 1)
         {
             color = new Color(255, 246, 0);
@@ -33,11 +35,12 @@ public class LoadTextElement : MonoBehaviour, IPointerClickHandler
         {
             color = new Color(255, 255, 255);
         }
+        loadText.color = color;
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        LoadSubPanelScript lsps = GameObject.Find("LoadSubPanelScript").GetComponent<LoadSubPanelScript>();
+        LoadSubPanelScript lsps = GameObject.Find("LoadSubPanel").GetComponent<LoadSubPanelScript>();
         lsps.OnLoadFilePressed(myNum);
     }
 }

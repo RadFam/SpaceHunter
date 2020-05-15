@@ -34,11 +34,9 @@ public class ListParticle : MonoBehaviour
     {
         if (canUpdateCanvas)
         {
-            //CPCS.UpdatePlasma(listFreeObjects.Count, listFreeObjects.Count + listBusyObjects.Count);
-
-            //CPCS.UpdatePlasma(listFreeObjects_weak.Count, listFreeObjects_weak.Count + listBusyObjects_weak.Count);
-            //CPCS.UpdatePlasma(listFreeObjects_average.Count, listFreeObjects_average.Count + listBusyObjects_average.Count);
-            //CPCS.UpdatePlasma(listFreeObjects_strong.Count, listFreeObjects_strong.Count + listBusyObjects_strong.Count);
+            CPCS.UpdatePlasma(listFreeObjects_weak.Count, listFreeObjects_weak.Count + listBusyObjects_weak.Count, 0);
+            CPCS.UpdatePlasma(listFreeObjects_average.Count, listFreeObjects_average.Count + listBusyObjects_average.Count, 1);
+            CPCS.UpdatePlasma(listFreeObjects_strong.Count, listFreeObjects_strong.Count + listBusyObjects_strong.Count, 2);
         }
     }
 }

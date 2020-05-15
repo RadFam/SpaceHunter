@@ -74,6 +74,11 @@ public class EnemyShipAI_Base : MonoBehaviour
         anim.enabled = false;
         deathExplode.Play();
         // Уничтожаем объект
+
+        SpacePrizeContainerScript spcs = FindObjectOfType<SpacePrizeContainerScript>();
+        int prize = Random.Range(0,4);
+        spcs.CreatePrize(gameObject.transform.position, prize);
+
         Invoke("MyDestroy", 1.8f);
     }
     private void MyDestroy()
@@ -81,9 +86,17 @@ public class EnemyShipAI_Base : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void ShowHealth()
+    {
+        EnemyTargetFrame enTF = gameObject.GetComponent<EnemyTargetFrame>();
+        enTF.SetHealth();
+    }
+
     public void OnHealthChange(float val)
     {
         //Debug.Log("My Health is: " + val.ToString());
+        EnemyTargetFrame enTF = gameObject.GetComponent<EnemyTargetFrame>();
+        enTF.SetHelthLevel(val);
     }
 
     public bool CheckForObstacle(float sRange, LayerMask mask, out RaycastHit rch)

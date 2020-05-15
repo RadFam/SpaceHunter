@@ -55,9 +55,20 @@ public class PlasmaShotEffect : MonoBehaviour {
                     PS.PlayEffect(hit.point);
                     EndScript();
                 }
+                if (hit.collider.tag == "Comet")
+                {
+                    PS.PlayEffect(hit.point);
+                    myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>()); 
+                    EndScript();
+                }
                 if (hit.collider.tag == "PlasmaArea")
                 {
                     myDamager.MakeDamage(hit.collider.gameObject.GetComponent<Damagable>());
+                }
+                if (hit.collider.tag == "Asteroid")
+                {
+                    PS.PlayEffect(hit.point);
+                    EndScript();
                 }
             }
 

@@ -7,6 +7,7 @@ public struct GeoPrize
 {
     public string prizeName;
     public string prizeDescription;
+    public int prizeCost;
     public Sprite prizeSprite;
     public MeshFilter prizeMesh;
     public Material prizeMaterial;

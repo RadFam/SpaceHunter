@@ -6,12 +6,15 @@ public class PlatformBaseFSM : StateMachineBehaviour
 {
     public GameObject battlePlatform;
     public GameObject player;
-    public float cannotRotateSpeed = 5.0f;
+    protected float cannotRotateSpeed = 50.0f;
 
     protected GameObject leftCannon;
     protected GameObject rightCannon;
     protected Transform leftCannonRot;
     protected Transform rightCannonRot;
+
+    protected Vector3 leftCannonPos;
+    protected Vector3 rightCannonPos;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -21,6 +24,8 @@ public class PlatformBaseFSM : StateMachineBehaviour
         rightCannon = battlePlatform.GetComponent<PlatformAI>().GetRightCannon();
         leftCannonRot = battlePlatform.GetComponent<PlatformAI>().GetLeftCannonRot();
         rightCannonRot = battlePlatform.GetComponent<PlatformAI>().GetRightCannonRot();
+        leftCannonPos = battlePlatform.GetComponent<PlatformAI>().GetLeftCannonPos();
+        rightCannonPos = battlePlatform.GetComponent<PlatformAI>().GetRightCannonPos();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

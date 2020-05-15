@@ -7,6 +7,8 @@ public class EnemyTargetFrame : MonoBehaviour
 {
     public Canvas myCanvas;
     public Transform cameraPlaneOrient;
+    public Slider health;
+    public bool showHealthBar;
 
     private GameObject player;
     private float maxDist;
@@ -19,6 +21,8 @@ public class EnemyTargetFrame : MonoBehaviour
     {
         player = GameObject.Find("Player");
         maxDist = player.GetComponent<SpaceShipWatchEnemies2>().SightDist;
+        //showHealthBar = true;
+        //health.value = 1.0f;
         SetFrameParams();
     }
 
@@ -26,6 +30,18 @@ public class EnemyTargetFrame : MonoBehaviour
     void Update()
     {
         SetFrameParams();
+    }
+
+    public void SetHealth()
+    {
+        showHealthBar = true;
+        health.gameObject.SetActive(true);
+        health.value = 1.0f;
+    }
+
+    public void SetHelthLevel(float frac)
+    {
+        health.value = frac;
     }
 
     private void SetFrameParams()
@@ -65,5 +81,6 @@ public class EnemyTargetFrame : MonoBehaviour
                 myCanvas.gameObject.SetActive(false);
             }
         }
+
     }
 }

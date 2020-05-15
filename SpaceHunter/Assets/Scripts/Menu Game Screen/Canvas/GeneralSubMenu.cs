@@ -6,19 +6,29 @@ using UnityEngine.EventSystems;
 public class GeneralSubMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isOver = false;
+    public bool isOverLocked = false;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isOver = true;
+        if (!isOverLocked)
+        {
+            isOver = true;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isOver = false;
+        if (!isOverLocked)
+        {
+            isOver = false;
+        }
     }
     public bool isOnMouse()
     {
-
-        return isOver;
+        if (!isOverLocked)
+        {
+            return isOver;
+        }
+        return true;
     }
 }

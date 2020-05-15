@@ -42,9 +42,12 @@ public class PlanetTypePrize : ScriptableObject
 
     public ConstGameCtrl.PlanetSurprize GetNameByProbability(int level, float probability)
     {
+        //Debug.Log("Level: " + level.ToString() + "  Probability: " + probability.ToString());
+
         ConstGameCtrl.PlanetSurprize name = allPlanetPrizes[0].nameOfPrize;
 
         List<float> cummulProbList = new List<float>();
+        List<ConstGameCtrl.PlanetSurprize> specNames = new List<ConstGameCtrl.PlanetSurprize>();
 
         int cnt = 0;
         while ((cnt < allPlanetPrizes[0].acceptableLevels.Count) && (level >= allPlanetPrizes[0].acceptableLevels[cnt]))
@@ -53,21 +56,52 @@ public class PlanetTypePrize : ScriptableObject
         }
         cnt--;
 
-        cummulProbList.Add(allPlanetPrizes[0].probabilityByLevel[cnt]);
+        //Debug.Log("Cnt: " + cnt.ToString());
 
-        for (int i = 1; i < allPlanetPrizes.Count; ++i )
+        int firstPrize = 0;
+        for (int i = 0; i < allPlanetPrizes.Count; ++i)
         {
-            cummulProbList.Add(cummulProbList[i-1] + allPlanetPrizes[i].probabilityByLevel[cnt]);
+            if (allPlanetPrizes[i].probabilityByLevel[cnt] > 0)
+            {
+                firstPrize = i;
+                break;
+            }
         }
+
+        //Debug.Log("firstPrize: " + firstPrize.ToString());
+
+        cummulProbList.Add(allPlanetPrizes[firstPrize].probabilityByLevel[cnt]); // насчет нуля нельзя быть уверенным!!!
+        //Debug.Log("First list add");
+        specNames.Add(allPlanetPrizes[firstPrize].nameOfPrize);
+        //Debug.Log("Second list add");
+        float prevVal = cummulProbList[0];
+        //Debug.Log("prevVal: " + prevVal.ToString());
+        Debug.Log("Cummul: " + prevVal.ToString() + "  " + allPlanetPrizes[firstPrize].nameOfPrize);
+
+        for (int i = firstPrize+1; i < allPlanetPrizes.Count; ++i )
+        {
+            if (allPlanetPrizes[i].probabilityByLevel[cnt] > 0)
+            {
+                prevVal += allPlanetPrizes[i].probabilityByLevel[cnt];
+                cummulProbList.Add(prevVal);
+                specNames.Add(allPlanetPrizes[i].nameOfPrize);
+                Debug.Log("Cummul: " + prevVal.ToString() + "  " + allPlanetPrizes[i].nameOfPrize);
+            }    
+        }
+
+        //Debug.Log("Probability: " + probability);
 
         for (int i = 0; i < cummulProbList.Count; ++i)
         {
             if (probability <= cummulProbList[i])
             {
-                name = allPlanetPrizes[i].nameOfPrize;
+                //Debug.Log("i: " + i);
+                name = specNames[i];
                 break;
             }
         }
+
+        //Debug.Log("Returned name: " + name);
 
         return name;
     }

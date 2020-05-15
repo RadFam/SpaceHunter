@@ -9,7 +9,9 @@ public class Damagable : MonoBehaviour {
     [SerializeField]
     float shieldPoints = 0.0f;
 
+    [SerializeField]
     private float maxHealthPoints;
+    [SerializeField]
     private float maxShieldPoints;
 
     private bool invulnerableAfterDamage = false;
@@ -53,6 +55,11 @@ public class Damagable : MonoBehaviour {
         invulnerableAfterDamage = false;
     }
 
+    public void SetInvulnerable(bool val)
+    {
+        invulnerableAfterDamage = val;
+    }
+
     public void TakeDamage(float damage)
     {
         if (!invulnerableAfterDamage)
@@ -81,8 +88,8 @@ public class Damagable : MonoBehaviour {
                 healthPoints -= minusOfShield; // was ... * 2.0f
             }
 
-                //Debug.Log("My Current health points are: " + healthPoints.ToString());
-                if (healthPoints <= 0.0f)
+            //Debug.Log("My Current health points are: " + healthPoints.ToString());
+            if (healthPoints <= 0.0f)
             {
                 invulnerableAfterDamage = true;
                 // Запускаем процедуру гибели объекта
@@ -97,14 +104,14 @@ public class Damagable : MonoBehaviour {
                 CPCS.UpdateShield(shieldPoints);
             }
 
-            if (myObject.tag == "Planet")
+            if (myObject.tag == "Planet" || myObject.tag == "Comet")
             {
                 planetChHlth(healthPoints);
             }
 
             if (myObject.tag == "Enemy")
             {
-                enemyChHlth(healthPoints);
+                enemyChHlth(healthPoints/maxHealthPoints);
             }
 
             if (myObject.tag == "PlasmaArea")
@@ -122,8 +129,10 @@ public class Damagable : MonoBehaviour {
 
     public void RestoreShield() // Specially for player
     {
+        //Debug.Log("Shield Points: " + shieldPoints);
         shieldPoints += maxShieldPoints / 4;
         shieldPoints = Mathf.Min(shieldPoints, maxShieldPoints);
+        //Debug.Log("Shield Points: " + shieldPoints);
     }
 
     public void TakeUltimateDamage()

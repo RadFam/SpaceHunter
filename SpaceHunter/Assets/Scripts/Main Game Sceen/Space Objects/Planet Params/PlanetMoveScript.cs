@@ -15,7 +15,7 @@ public class PlanetMoveScript : MonoBehaviour
     private int currPoint;
     private int allPointNum = 64;
     private Vector3 nextPlace;
-    private float distEx = 0.1f;
+    private float distEx = 5f;
 
     private float step;
 

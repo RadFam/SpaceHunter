@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConstGameCtrl : MonoBehaviour {
 
@@ -20,8 +21,11 @@ public class ConstGameCtrl : MonoBehaviour {
 
     public SpaceShop playerGoods;
     public List<GeoPrize> playerCollection; // Минералы, которые игрок успел собрать
-    public int playerCurrentGold;
     public Dictionary<string, int> playerInventory;
+    public Dictionary<string, int> playerStorage;
+
+    public CollectEvent cEvent;
+    public Transform playerTMPro_01;
 
     [SerializeField]
     private int playerHealth_level; public int PHealth { get { return playerHealth_level; } set { playerHealth_level = value; } }// Здоровье игрока
@@ -44,6 +48,8 @@ public class ConstGameCtrl : MonoBehaviour {
     [SerializeField]
     private List<string> playerMinerals_collection = new List<string>(); public List<string> PMinerals { get { return playerMinerals_collection; } set { playerMinerals_collection = value; } }//Названия накопленных минералов
 
+    private int currentLevel; public int CurrentLevel { get { return currentLevel; } set { currentLevel = value; } }
+
     private SavebleEntity sEntity;
 
     // Use this for initialization
@@ -61,13 +67,16 @@ public class ConstGameCtrl : MonoBehaviour {
         playerProgress_level = 0;
         playerMinerals_collection.Clear();
 
+        currentLevel = 4;
+
         if (instance == null)
         {
             instance = this;
             allPrizes = mainPC.GamePrize;
             playerInventory = new Dictionary<string, int>();
+            playerStorage = new Dictionary<string, int>();
 
-            playerCollection = allPrizes;
+            //playerCollection = allPrizes;
 
             /*
             playerCollection.Add(allPrizes[0]);
@@ -82,14 +91,37 @@ public class ConstGameCtrl : MonoBehaviour {
             playerCollection.Add(allPrizes[49]);
             */
 
+            playerStorage.Add("Огненный нинит", 5);
+            playerStorage.Add("Амберил", 10);
+            playerStorage.Add("Малахит", 8);
+            playerStorage.Add("Гримадлин", 9);
+
             sEntity = new SavebleEntity();
         }	
 	}
 
+    public void ZeroNewGame()
+    {
+        playerCollection.Clear();
+        playerInventory = new Dictionary<string, int>();
+
+        playerHealth_level = 0;
+        playerShield_level = 0;
+        playerFuel_level = 0;
+        playerRadar_level = 0;
+        playerEngine_level = 0;
+        playerManeuver_level = 0;
+        playerWeapon_level = 0;
+        playerProgress_level = 0;
+        playerMinerals_collection.Clear();
+
+        currentLevel = 0;
+    }
+
     public GeoPrize GetPrizeParams(int num)
     {
-        return allPrizes[0];
-        //return allPrizes[num];
+        //return allPrizes[0];
+        return allPrizes[num];
     }
 
     public void AddMineralToInventory(string minName)
@@ -105,36 +137,53 @@ public class ConstGameCtrl : MonoBehaviour {
         }
     }
 
+    // Вызвывается, когда миссия удачно завершается (игрок не погиб!!!)
     public void MoveMineralsFromInventoryToPlayerCollection()
     {
         List<string> tmpMineralNames = new List<string>();
         foreach (KeyValuePair<string, int> keyValue in playerInventory)
         {
-            PlayerGetNewCollectible(keyValue.Key);
-            int res = keyValue.Value - 1;
-            if (res == 0)
-            { 
-                tmpMineralNames.Add(keyValue.Key);
+            bool newMineral = PlayerGetNewCollectible(keyValue.Key);
+            int res = keyValue.Value;
+            if (newMineral)
+            {
+                res -= 1;
+            }
+            if (res > 0) // Что-то осталось для продажи
+            {
+                // Передача минералов на склад
+                string minName = keyValue.Key;
+                if (playerStorage.ContainsKey(minName))
+                {
+                    int val = playerStorage[minName];
+                    playerStorage[minName] = val + res;
+                }
+                else
+                {
+                    playerStorage.Add(minName, res);
+                }
             }
         }
 
-        // Если что, останутся минералы на продажу
-        foreach (string s in tmpMineralNames)
-        {
-            playerInventory.Remove(s);
-            // Где-то здесь должна идти продажа....
-        }
+        playerInventory.Clear();
     }
 
-    public void PlayerGetNewCollectible(string mineralName)
+    public void EmptyPlayerStorage()
+    {
+        playerStorage.Clear();
+    }
+
+    public bool PlayerGetNewCollectible(string mineralName)
     {
         int ind = allPrizes.FindIndex(x => x.prizeName == mineralName);
         int ind_2 = playerCollection.FindIndex(x => x.prizeName == mineralName);
         if (ind_2 == -1)
         {
             playerCollection.Add(allPrizes[ind]);
+            FillPlayerCollectionNames();
+            return true;
         }
-        FillPlayerCollectionNames();
+        return false;
     }
 
     // Для отрисовки текущей коллекции // В таком виде не работает. Расчет того, как рисовать идет в скрипте, прикрепленном к UI форме
@@ -181,8 +230,11 @@ public class ConstGameCtrl : MonoBehaviour {
 
     public void Save(string filename)
     {
+        FillPlayerCollectionNames();
         sEntity.UpdateData();
+        Debug.Log(sEntity);
         string filenamePath = Path.Combine(Application.persistentDataPath, filename + ".shs");
+        Debug.Log(filenamePath);
         using (FileStream stream = File.Open(filenamePath, FileMode.Create))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -192,8 +244,10 @@ public class ConstGameCtrl : MonoBehaviour {
 
     public void Load(string filenamePath)
     {
+        Debug.Log(filenamePath);
         if (!File.Exists(filenamePath))
         {
+            Debug.Log("File doesnot exist");
             return;
         }
         using (FileStream stream = File.Open(filenamePath, FileMode.Open))
@@ -203,6 +257,23 @@ public class ConstGameCtrl : MonoBehaviour {
         }
 
         sEntity.ReloadData();
+
+        /*
+        Debug.Log(PHealth);
+        Debug.Log(PShield);
+        Debug.Log(PFuel);
+        Debug.Log(PRadar);
+        Debug.Log(PEngine);
+        Debug.Log(PManeuver);
+        Debug.Log(PWeapon);
+        Debug.Log(PProgress);
+        Debug.Log(PMoney);
+        foreach(string str in PMinerals)
+        {
+            Debug.Log(str);
+        }
+        */
+
         FillPlayerCollectionGeo();
     }
 
@@ -264,9 +335,9 @@ public class ConstGameCtrl : MonoBehaviour {
         }
         else
         {
-            if (playerCurrentGold >= playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp)+1].cost) // Золота хватает
+            if (playerMoney_level >= playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp)+1].cost) // Золота хватает
             {
-                playerCurrentGold -= playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp) + 1].cost;
+                OnChangeMoneyLevel(-1 * playerGoods.ShopProducts[(int)pUp].upgradeDefinition[GetUpgradeLevel(pUp) + 1].cost);
                 SetUpgradeLevel(pUp);
                 return true;
             }
@@ -277,5 +348,112 @@ public class ConstGameCtrl : MonoBehaviour {
         }
 
         return false;
+    }
+
+    public int GetMaxPlayerParam(PlayerShipUpgrades psu)
+    {
+        int level = 0;
+
+        switch ((int)psu)
+        {
+            case 0:
+                level = playerHealth_level;
+                break;
+            case 1:
+                level = playerShield_level;
+                break;
+            case 2:
+                level = playerFuel_level;
+                break;
+            case 3:
+                level = playerRadar_level;
+                break;
+            case 4:
+                level = playerEngine_level;
+                break;
+            case 5:
+                level = playerManeuver_level;
+                break;
+            case 6:
+                level = playerWeapon_level;
+                break;
+            default:
+                break;
+        }
+
+        int val = 0;
+        val = playerGoods.ShopProducts[(int)psu].upgradeDefinition[level].property;
+        return val;
+    }
+
+    public void OnChangeMoneyLevel(int moneyChangeValue)
+    {
+        playerMoney_level += moneyChangeValue;
+    }
+
+    public void OnChangeFuelLevel(int fuelChangeValue)
+    {
+
+    }
+
+    public void OnChangeHabar(string prize, int value)
+    {
+        PlanetSurprize ps = (PlanetSurprize)System.Enum.Parse(typeof(PlanetSurprize), prize);
+
+
+        if (ps == PlanetSurprize.Gold)
+        {
+            Debug.Log("Money");
+            OnChangeMoneyLevel(value);
+            cEvent.Raise(ps, playerMoney_level);
+        }
+        else if (ps == PlanetSurprize.Fuel)
+        {
+            Debug.Log("Fuel");
+            cEvent.Raise(ps, value);
+        }
+        else if (ps == PlanetSurprize.Health)
+        {
+            // Ничего уже не делаем
+            Debug.Log("Health");
+            cEvent.Raise(ps, value);
+        }
+        else if (ps == PlanetSurprize.Shield)
+        {
+            // Ничего уже не делаем
+            Debug.Log("Shield");
+            cEvent.Raise(ps, value);
+        }
+        else
+        {
+            // Добавляем в инвентарь минерал
+            Debug.Log("Mineral");
+            AddMineralToInventory(prize);
+            cEvent.Raise(ps, 1);
+        }
+    }
+
+    public void ChangeGameScene(int value)
+    {
+        string scenename;
+
+        // value = -1 - go to menu scene
+        if (value == -1)
+        {
+            scenename = "MenuGameScene";
+        }
+        else
+        {
+            if (value == 0)
+            {
+                scenename = "MainGameScene";
+            }
+            else
+            {
+                scenename = "MainGameScene_" + value.ToString();
+            }
+        }
+
+        SceneManager.LoadScene(scenename, LoadSceneMode.Single);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpaceShopCtrl : MonoBehaviour
 {
     public List<UpgradePanelScript> upgradeElems = new List<UpgradePanelScript>();
+    public SellMineralControl SMC;
     
     // Start is called before the first frame update
     void Start()
@@ -18,5 +19,10 @@ public class SpaceShopCtrl : MonoBehaviour
         {
             ups.UpdateStatus();
         }
+    }
+
+    public void OpenSellMineralMenu()
+    {
+        SMC.gameObject.SetActive(true);
     }
 }

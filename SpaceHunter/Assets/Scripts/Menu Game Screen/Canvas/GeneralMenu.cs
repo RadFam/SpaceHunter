@@ -19,6 +19,7 @@ public class GeneralMenu : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log(gameObject.transform.GetChild(0));
         GeneralSubMenu subPanel = gameObject.transform.GetChild(0).gameObject.GetComponent<GeneralSubMenu>();
         if (!subPanel.isOnMouse())
         {

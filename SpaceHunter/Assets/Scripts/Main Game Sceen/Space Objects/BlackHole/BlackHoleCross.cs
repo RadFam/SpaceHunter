@@ -51,7 +51,7 @@ public class BlackHoleCross : MonoBehaviour
     {
         while (Vector3.Distance(player.transform.position, exit.position) >= 1.0f)
         {
-            player.transform.Translate(exitLine * 3f, Space.World);
+            player.transform.Translate(exitLine * 1f, Space.World);
             yield return new WaitForSeconds(0.01f);
         }
 

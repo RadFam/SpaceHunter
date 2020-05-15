@@ -13,6 +13,7 @@ TagManager:
   - PlayerPlasma
   - PlasmaArea
   - StarPortal
+  - Asteroid
   layers:
   - Default
   - TransparentFX

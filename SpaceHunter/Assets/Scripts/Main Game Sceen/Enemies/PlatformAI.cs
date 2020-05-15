@@ -8,8 +8,11 @@ public class PlatformAI : MonoBehaviour
     public GameObject leftCannon;
     public GameObject rightCannon;
     public ParticleSystem deathExplode;
-    Transform leftCannonRot;
-    Transform rightCannonRot;
+    public Transform leftCannonRot;
+    public Transform rightCannonRot;
+
+    private Vector3 fixedLeftCannonPos;
+    private Vector3 fixedRightCannonPos;
 
     [SerializeField]
     private float sightRange = 200.0f;
@@ -45,9 +48,22 @@ public class PlatformAI : MonoBehaviour
         return rightCannon;
     }
 
+    public Vector3 GetLeftCannonPos()
+    {
+        return fixedLeftCannonPos;
+    }
+
+    public Vector3 GetRightCannonPos()
+    {
+        return fixedRightCannonPos;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        fixedLeftCannonPos = leftCannon.transform.localPosition;
+        fixedRightCannonPos = rightCannon.transform.localPosition;
+
         anim = gameObject.GetComponent<Animator>();
         enemyBattleAI = gameObject.GetComponent<EnemyShipBattleAI>();
 
@@ -92,6 +108,11 @@ public class PlatformAI : MonoBehaviour
         deathExplode.Play();
         // Уничтожаем объект
         Invoke("MyDestroy", 1.8f);
+    }
+
+    private void MyDestroy()
+    {
+        Destroy(gameObject);
     }
 
     public void OnHealthChange(float val)

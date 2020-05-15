@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CommonSceneParams : MonoBehaviour {
 
+    //public GameEventListener gameEL;
+
     private float playerInitHealth;
     private float playerInitShield;
     private float playerFuelVolume;
@@ -12,8 +14,10 @@ public class CommonSceneParams : MonoBehaviour {
 
     private List<EnemyShipAI_Base> enemies;
     private ControlPanelCanvasScript CPCS;
+    private bool canFly;
 
-    public int currLevel;
+    private string endMessage_01 = "Топливо закончилось\nПора домой";
+    private string endMessage_02 = "Миссия провалилась\nПора возвращаться";
 
     public float pIH
     {
@@ -31,22 +35,28 @@ public class CommonSceneParams : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        playerInitHealth = 30;
-        playerInitShield = 30;
-        playerFuelVolume = 360;
+        //playerInitHealth = 30;
+        //playerInitShield = 30;
+        //playerFuelVolume = 360;
 
-        currLevel = 0;
-
-        lastFuelVolume = playerFuelVolume;
+        //lastFuelVolume = playerFuelVolume;
     }
 
 	void Start () 
     {
+        playerInitHealth = ConstGameCtrl.instance.GetMaxPlayerParam(ConstGameCtrl.PlayerShipUpgrades.health);
+        playerInitShield = ConstGameCtrl.instance.GetMaxPlayerParam(ConstGameCtrl.PlayerShipUpgrades.shield);
+        playerFuelVolume = ConstGameCtrl.instance.GetMaxPlayerParam(ConstGameCtrl.PlayerShipUpgrades.fuel);
+
+        lastFuelVolume = playerFuelVolume;
+
         Random.InitState(42);
 		CPCS = FindObjectOfType<ControlPanelCanvasScript>();
 
         CPCS.UpdateHealth(playerInitHealth);
-        //CPCS.UpdateShield(playerInitShield);
+        CPCS.UpdateShield(0);
+
+        canFly = true;
 	}
 
     public float GetRandomFloat()
@@ -57,13 +67,47 @@ public class CommonSceneParams : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        CPCS.UpdateFuel(lastFuelVolume);
-
-        lastFuelVolume -= Time.deltaTime;
-
-        if (lastFuelVolume <= 0.1f)
+        if (canFly)
         {
-            // End Game
+            CPCS.UpdateFuel(lastFuelVolume);
+
+            lastFuelVolume -= Time.deltaTime;
+
+            if (lastFuelVolume <= 0.1f)
+            {
+                // Отключить игрока
+                canFly = false;
+                SpaceShipControl ssc = FindObjectOfType<SpaceShipControl>();
+                ssc.FreezeAll();
+                EndGame(endMessage_01);
+            }
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Return))
+            {
+                ControlPanelCanvasScript cpcs = FindObjectOfType<ControlPanelCanvasScript>();
+                cpcs.CloseEndMessage();
+            }
         }
 	}
+
+    public void AddFuel(int val)
+    {
+        lastFuelVolume = Mathf.Min(lastFuelVolume+val, playerFuelVolume);
+    }
+
+    public void OnPlayerDeath()
+    {
+        canFly = false;
+        //SpaceShipControl ssc = FindObjectOfType<SpaceShipControl>();
+        //ssc.FreezeAll();
+        EndGame(endMessage_02);
+    }
+
+    public void EndGame(string msg)
+    {
+        ControlPanelCanvasScript cpcs = FindObjectOfType<ControlPanelCanvasScript>();
+        cpcs.ShowEndMessage(msg);
+    }
 }

@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,18 +14,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allPlanetPrizes:
   - nameOfPrize: 0
-    acceptableLevels: 00000000
+    acceptableLevels: 0000000004000000090000000e000000
     probabilityByLevel:
     - 0.6
-  - nameOfPrize: 4
-    acceptableLevels: 00000000
-    probabilityByLevel:
+    - 0.5
+    - 0.4
     - 0.3
+  - nameOfPrize: 3
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0.2
+    - 0.2
+    - 0.1
+    - 0
   - nameOfPrize: 5
     acceptableLevels: 00000000
     probabilityByLevel:
     - 0.05
-  - nameOfPrize: 6
-    acceptableLevels: 00000000
+  - nameOfPrize: 1
+    acceptableLevels: 0000000004000000090000000e000000
     probabilityByLevel:
-    - 0.05
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0
+  - nameOfPrize: 26
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+  - nameOfPrize: 4
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0
+    - 0.1
+    - 0.1
+    - 0.1
+  - nameOfPrize: 5
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0
+    - 0
+    - 0.1
+    - 0.1
+  - nameOfPrize: 7
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0
+    - 0
+    - 0
+    - 0.1
+  - nameOfPrize: 12
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0
+    - 0
+    - 0
+    - 0.1
+  - nameOfPrize: 14
+    acceptableLevels: 0000000004000000090000000e000000
+    probabilityByLevel:
+    - 0
+    - 0
+    - 0
+    - 0.1
